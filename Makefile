@@ -5,7 +5,7 @@ LDFLAGS = -g
 # If you have the resampler library installed, add -DHAS_SRC to the CFLAGS line, and -lsamplerate to the LIBS line
 
 CFLAGS  = -g -O3 -Wall -pthread
-LIBS    = -lpthread -lmd
+LIBS    = -lpthread -lmd -lmosquitto
 
 OBJECTS = Conf.o FMGateway.o FMNetwork.o IAXNetwork.o Log.o MQTTConnection.o Network.o RAWNetwork.o StopWatch.o Thread.o Timer.o UDPSocket.o \
 		  USRPNetwork.o Utils.o
