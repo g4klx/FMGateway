@@ -16,6 +16,7 @@
 *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
+#include "MQTTConnection.h"
 #include "USRPNetwork.h"
 #include "RAWNetwork.h"
 #include "IAXNetwork.h"
@@ -58,6 +59,9 @@ const char* DEFAULT_INI_FILE = "/etc/FMGateway.ini";
 #include <cstdarg>
 #include <ctime>
 #include <cstring>
+
+// In Log.cpp
+extern CMQTTConnection* m_mqtt;
 
 const unsigned int BUFFER_LENGTH = 500U;
 
@@ -197,15 +201,14 @@ int CFMGateway::run()
 	}
 #endif
 
-#if !defined(_WIN32) && !defined(_WIN64)
-        ret = ::LogInitialise(m_daemon, conf.getLogFilePath(), conf.getLogFileRoot(), conf.getLogFileLevel(), conf.getLogDisplayLevel(), conf.getLogFileRotate());
-#else
-        ret = ::LogInitialise(false, conf.getLogFilePath(), conf.getLogFileRoot(), conf.getLogFileLevel(), conf.getLogDisplayLevel(), conf.getLogFileRotate());
-#endif
-	if (!ret) {
-		::fprintf(stderr, "FMGateway: unable to open the log file\n");
-		return -1;
-	}
+	::LogInitialise(conf.getLogDisplayLevel(), conf.getLogMQTTLevel());
+
+	std::vector<std::pair<std::string, void (*)(const unsigned char*, unsigned int)>> subscriptions;
+
+	m_mqtt = new CMQTTConnection(conf.getMQTTAddress(), conf.getMQTTPort(), conf.getMQTTName(), subscriptions, conf.getMQTTKeepalive());
+	ret = m_mqtt->open();
+	if (!ret)
+		return 1; 
 
 #if !defined(_WIN32) && !defined(_WIN64)
 	if (m_daemon) {
@@ -282,6 +285,8 @@ int CFMGateway::run()
 		if (ms < 10U)
 			CThread::sleep(10U);
 	}
+
+	LogInfo("FMGateway is stopping");
 
 	localNetwork.close();
 

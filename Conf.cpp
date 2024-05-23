@@ -30,6 +30,7 @@ enum SECTION {
 	SECTION_NONE,
 	SECTION_GENERAL,
 	SECTION_LOG,
+	SECTION_MQTT,
 	SECTION_NETWORK,
 	SECTION_USRP_NETWORK,
 	SECTION_RAW_NETWORK,
@@ -43,10 +44,11 @@ m_protocol("USRP"),
 m_debug(false),
 m_daemon(false),
 m_logDisplayLevel(0U),
-m_logFileLevel(0U),
-m_logFilePath(),
-m_logFileRoot(),
-m_logFileRotate(true),
+m_logMQTTLevel(0U),
+m_mqttAddress("127.0.0.1"),
+m_mqttPort(1883U),
+m_mqttKeepalive(60U),
+m_mqttName("fm-gateway"),
 m_networkLocalAddress("127.0.0.1"),
 m_networkLocalPort(0U),
 m_networkRptAddress("127.0.0.1"),
@@ -99,6 +101,8 @@ bool CConf::read()
 				section = SECTION_GENERAL;
 			else if (::strncmp(buffer, "[Log]", 5U) == 0)
 				section = SECTION_LOG;
+			else if (::strncmp(buffer, "[MQTT]", 6U) == 0)
+				section = SECTION_MQTT;
 			else if (::strncmp(buffer, "[Network]", 9U) == 0)
 				section = SECTION_NETWORK;
 			else if (::strncmp(buffer, "[USRP Network]", 14U) == 0)
@@ -148,16 +152,19 @@ bool CConf::read()
 			else if (::strcmp(key, "Daemon") == 0)
 				m_daemon = ::atoi(value) == 1;
 		} else if (section == SECTION_LOG) {
-			if (::strcmp(key, "FilePath") == 0)
-				m_logFilePath = value;
-			else if (::strcmp(key, "FileRoot") == 0)
-				m_logFileRoot = value;
-			else if (::strcmp(key, "FileLevel") == 0)
-				m_logFileLevel = (unsigned int)::atoi(value);
-			else if (::strcmp(key, "DisplayLevel") == 0)
+			if (::strcmp(key, "DisplayLevel") == 0)
 				m_logDisplayLevel = (unsigned int)::atoi(value);
-			else if (::strcmp(key, "FileRotate") == 0)
-				m_logFileRotate = ::atoi(value) ==  1;
+			else if (::strcmp(key, "MQTTLevel") == 0)
+				m_logMQTTLevel = (unsigned int)::atoi(value);
+		} else if (section == SECTION_MQTT) {
+			if (::strcmp(key, "Address") == 0)
+				m_mqttAddress = value;
+			else if (::strcmp(key, "Port") == 0)
+				m_mqttPort = uint16_t(::atoi(value));
+			else if (::strcmp(key, "Keepalive") == 0)
+				m_mqttKeepalive = (unsigned int)::atoi(value);
+			else if (::strcmp(key, "Name") == 0)
+				m_mqttName = value;
 		} else if (section == SECTION_NETWORK) {
 			if (::strcmp(key, "LocalAddress") == 0)
 				m_networkLocalAddress = value;
@@ -245,24 +252,29 @@ unsigned int CConf::getLogDisplayLevel() const
 	return m_logDisplayLevel;
 }
 
-unsigned int CConf::getLogFileLevel() const
+unsigned int CConf::getLogMQTTLevel() const
 {
-	return m_logFileLevel;
+	return m_logMQTTLevel;
 }
 
-std::string CConf::getLogFilePath() const
+std::string CConf::getMQTTAddress() const
 {
-	return m_logFilePath;
+	return m_mqttAddress;
 }
 
-std::string CConf::getLogFileRoot() const
+uint16_t CConf::getMQTTPort() const
 {
-	return m_logFileRoot;
+	return m_mqttPort;
 }
 
-bool CConf::getLogFileRotate() const
+unsigned int CConf::getMQTTKeepalive() const
 {
-	return m_logFileRotate;
+	return m_mqttKeepalive;
+}
+
+std::string CConf::getMQTTName() const
+{
+	return m_mqttName;
 }
 
 std::string CConf::getNetworkLocalAddress() const

@@ -56,6 +56,9 @@
     <ClInclude Include="FMNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MQTTConnection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IAXNetwork.cpp">
@@ -95,6 +98,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FMNetwork.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MQTTConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

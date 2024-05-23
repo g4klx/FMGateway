@@ -159,6 +159,7 @@
     <ClInclude Include="FMGateway.h" />
     <ClInclude Include="FMNetwork.h" />
     <ClInclude Include="IAXNetwork.h" />
+    <ClInclude Include="MQTTConnection.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="RAWNetwork.h" />
     <ClInclude Include="USRPNetwork.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="FMGateway.cpp" />
     <ClCompile Include="FMNetwork.cpp" />
     <ClCompile Include="IAXNetwork.cpp" />
+    <ClCompile Include="MQTTConnection.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="RAWNetwork.cpp" />
     <ClCompile Include="USRPNetwork.cpp" />

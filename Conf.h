@@ -39,10 +39,13 @@ public:
 
 	// The Log section
 	unsigned int getLogDisplayLevel() const;
-	unsigned int getLogFileLevel() const;
-	std::string  getLogFilePath() const;
-	std::string  getLogFileRoot() const;
-	bool         getLogFileRotate() const;
+	unsigned int getLogMQTTLevel() const;
+
+	// The MQTT section
+	std::string  getMQTTAddress() const;
+	uint16_t     getMQTTPort() const;
+	unsigned int getMQTTKeepalive() const;
+	std::string  getMQTTName() const;
 
 	// The Network section
 	std::string  getNetworkLocalAddress() const;
@@ -85,10 +88,12 @@ private:
 	bool         m_daemon;
 
 	unsigned int m_logDisplayLevel;
-	unsigned int m_logFileLevel;
-	std::string  m_logFilePath;
-	std::string  m_logFileRoot;
-	bool         m_logFileRotate;
+	unsigned int m_logMQTTLevel;
+
+	std::string  m_mqttAddress;
+	uint16_t     m_mqttPort;
+	unsigned int m_mqttKeepalive;
+	std::string  m_mqttName;
 
 	std::string  m_networkLocalAddress;
 	uint16_t     m_networkLocalPort;

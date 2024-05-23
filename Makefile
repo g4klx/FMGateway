@@ -7,7 +7,8 @@ LDFLAGS = -g
 CFLAGS  = -g -O3 -Wall -pthread
 LIBS    = -lpthread
 
-OBJECTS = Conf.o FMGateway.o FMNetwork.o IAXNetwork.o Log.o Network.o RAWNetwork.o StopWatch.o Thread.o Timer.o UDPSocket.o USRPNetwork.o Utils.o
+OBJECTS = Conf.o FMGateway.o FMNetwork.o IAXNetwork.o Log.o MQTTConnection.o Network.o RAWNetwork.o StopWatch.o Thread.o Timer.o UDPSocket.o \
+		  USRPNetwork.o Utils.o
 
 all:		FMGateway
 
