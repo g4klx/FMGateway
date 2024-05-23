@@ -70,27 +70,13 @@ bool CFMNetwork::open()
 	return true;
 }
 
-bool CFMNetwork::writeStart()
-{
-	uint8_t buffer[5U];
-
-	buffer[0U] = 'F';
-	buffer[1U] = 'M';
-	buffer[2U] = 'S';
-
-	if (m_debug)
-		CUtils::dump(1U, "FM Network Data Sent", buffer, 3U);
-
-	return m_socket.write(buffer, 3U, m_addr, m_addrLen);
-}
-
 bool CFMNetwork::writeData(const float* data, unsigned int nSamples)
 {
 	assert(data != nullptr);
 	assert(nSamples > 0U);
 
-	uint8_t buffer[500U];
-	::memset(buffer, 0x00U, 500U);
+	uint8_t buffer[BUFFER_LENGTH];
+	::memset(buffer, 0x00U, BUFFER_LENGTH);
 
 	unsigned int length = 0U;
 
@@ -111,20 +97,6 @@ bool CFMNetwork::writeData(const float* data, unsigned int nSamples)
 	return m_socket.write(buffer, length, m_addr, m_addrLen);
 }
 
-bool CFMNetwork::writeEnd()
-{
-	uint8_t buffer[5U];
-
-	buffer[0U] = 'F';
-	buffer[1U] = 'M';
-	buffer[2U] = 'E';
-
-	if (m_debug)
-		CUtils::dump(1U, "FM Network Data Sent", buffer, 3U);
-
-	return m_socket.write(buffer, 3U, m_addr, m_addrLen);
-}
-
 bool CFMNetwork::writePing()
 {
 	uint8_t buffer[5U];
@@ -141,6 +113,7 @@ bool CFMNetwork::writePing()
 
 void CFMNetwork::clock(unsigned int ms)
 {
+	m_timer.clock(ms);
 	if (m_timer.isRunning() && m_timer.hasExpired()) {
 		writePing();
 		m_timer.start();
