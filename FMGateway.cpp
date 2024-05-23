@@ -147,7 +147,7 @@ int CFMGateway::run()
 	}
 
 #if !defined(_WIN32) && !defined(_WIN64)
-	bool m_daemon = m_conf.getDaemon();
+	bool m_daemon = conf.getDaemon();
 	if (m_daemon) {
 		// Create new process
 		pid_t pid = ::fork();
