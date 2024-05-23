@@ -40,11 +40,7 @@ public:
 
 	bool open();
 
-	bool writeStart();
-
 	bool writeData(const float* data, unsigned int nSamples);
-
-	bool writeEnd();
 
 	NETWORK_TYPE readType() const;
 
