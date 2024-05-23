@@ -16,46 +16,55 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef	USRPNetwork_H
-#define	USRPNetwork_H
+#ifndef	FMNetwork_H
+#define	FMNetwork_H
 
 #include "RingBuffer.h"
 #include "UDPSocket.h"
-#include "Network.h"
+#include "Timer.h"
 
 #include <cstdint>
 #include <string>
 
-class CUSRPNetwork : public INetwork {
+enum NETWORK_TYPE {
+	NT_NONE,
+	NT_START,
+	NT_DATA,
+	NT_END
+};
+
+class CFMNetwork {
 public:
-	CUSRPNetwork(const std::string& callsign, const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug);
-	virtual ~CUSRPNetwork();
+	CFMNetwork(const std::string& localAddress, uint16_t localPort, const std::string& rptAddress, uint16_t rptPort, bool debug);
+	~CFMNetwork();
 
-	virtual bool open();
+	bool open();
 
-	virtual bool writeStart();
+	bool writeStart();
 
-	virtual bool writeData(const float* data, unsigned int nSamples);
+	bool writeData(const float* data, unsigned int nSamples);
 
-	virtual bool writeEnd();
+	bool writeEnd();
 
-	virtual unsigned int readData(float* out, unsigned int nOut);
+	NETWORK_TYPE readType() const;
 
-	virtual void reset();
+	unsigned int readData(float* out, unsigned int nOut);
 
-	virtual void close();
+	void reset();
 
-	virtual void clock(unsigned int ms);
+	void close();
+
+	void clock(unsigned int ms);
 
 private:
-	std::string         m_callsign;
 	CUDPSocket          m_socket;
 	sockaddr_storage    m_addr;
 	unsigned int        m_addrLen;
 	bool                m_debug;
 	CRingBuffer<uint8_t> m_buffer;
-	uint32_t            m_seqNo;
+	CTimer              m_timer;
+
+	bool writePing();
 };
 
 #endif
-

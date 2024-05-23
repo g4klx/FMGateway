@@ -155,6 +155,9 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Conf.h" />
+    <ClInclude Include="FMGateway.h" />
+    <ClInclude Include="FMNetwork.h" />
     <ClInclude Include="IAXNetwork.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="RAWNetwork.h" />
@@ -169,6 +172,9 @@
     <ClInclude Include="Version.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Conf.cpp" />
+    <ClCompile Include="FMGateway.cpp" />
+    <ClCompile Include="FMNetwork.cpp" />
     <ClCompile Include="IAXNetwork.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="RAWNetwork.cpp" />

@@ -37,12 +37,10 @@ enum IAX_STATUS {
 
 class CIAXNetwork : public INetwork {
 public:
-	CIAXNetwork(const std::string& callsign, const std::string& username, const std::string& password, const std::string& node, const std::string& localAddress, unsigned short localPort, const std::string& gatewayAddress, unsigned short gatewayPort, bool debug);
+	CIAXNetwork(const std::string& callsign, const std::string& username, const std::string& password, const std::string& node, const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug);
 	virtual ~CIAXNetwork();
 
 	virtual bool open();
-
-	virtual void enable(bool enabled);
 
 	virtual bool writeStart();
 
@@ -67,23 +65,22 @@ private:
 	sockaddr_storage    m_addr;
 	unsigned int        m_addrLen;
 	bool                m_debug;
-	bool                m_enabled;
-	CRingBuffer<unsigned char> m_buffer;
+	CRingBuffer<uint8_t> m_buffer;
 	IAX_STATUS          m_status;
 	CTimer              m_retryTimer;
 	CTimer              m_pingTimer;
 	std::string         m_seed;
 	CStopWatch          m_timestamp;
-	unsigned short      m_sCallNo;
-	unsigned short      m_dCallNo;
-	unsigned char       m_iSeqNo;
-	unsigned char       m_oSeqNo;
-	unsigned int        m_rxJitter;
-	unsigned int        m_rxLoss;
-	unsigned int        m_rxFrames;
-	unsigned short      m_rxDelay;
-	unsigned int        m_rxDropped;
-	unsigned int        m_rxOOO;
+	uint16_t            m_sCallNo;
+	uint16_t            m_dCallNo;
+	uint8_t             m_iSeqNo;
+	uint8_t             m_oSeqNo;
+	uint32_t            m_rxJitter;
+	uint32_t            m_rxLoss;
+	uint32_t            m_rxFrames;
+	uint16_t            m_rxDelay;
+	uint32_t            m_rxDropped;
+	uint32_t            m_rxOOO;
 	bool                m_keyed;
 #if defined(_WIN32) || defined(_WIN64)
 	HCRYPTPROV          m_provider;
@@ -93,18 +90,18 @@ private:
 	bool writeAuthRep();
 	bool writeKey(bool key);
 	bool writePing();
-	bool writePong(unsigned int ts);
-	bool writeAck(unsigned int ts);
+	bool writePong(uint32_t ts);
+	bool writeAck(uint32_t ts);
 	bool writeLagRq();
-	bool writeLagRp(unsigned int ts);
+	bool writeLagRp(uint32_t ts);
 	bool writeHangup();
 	bool writeRegReq(bool retry);
-	bool writeAudio(const short* audio, unsigned int length);
+	bool writeAudio(const int16_t* audio, unsigned int length);
 
-	void uLawEncode(const short* audio, unsigned char* buffer, unsigned int length) const;
-	void uLawDecode(const unsigned char* buffer, short* audio, unsigned int length) const;
+	void uLawEncode(const int16_t* audio, uint8_t* buffer, unsigned int length) const;
+	void uLawDecode(const uint8_t* buffer, int16_t* audio, unsigned int length) const;
 
-	bool compareFrame(const unsigned char* buffer, unsigned char type1, unsigned char type2) const;
+	bool compareFrame(const uint8_t* buffer, uint8_t type1, uint8_t type2) const;
 };
 
 #endif

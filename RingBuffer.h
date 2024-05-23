@@ -82,7 +82,7 @@ public:
 		return true;
 	}
 
-	bool peek(T* buffer, unsigned int nSamples)
+	bool peek(T* buffer, unsigned int nSamples) const
 	{
 		if (dataSize() < nSamples) {
 			LogError("**** Underflow peek in %s ring buffer, %u < %u", m_name, dataSize(), nSamples);

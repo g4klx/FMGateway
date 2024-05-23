@@ -39,69 +39,69 @@
 
 #define	DEBUG_IAX
 
-const unsigned char IAX_PROTO_VERSION   = 2U;
+const uint8_t IAX_PROTO_VERSION   = 2U;
 
-const unsigned char AST_FRAME_DTMF      = 1U;
-const unsigned char AST_FRAME_VOICE     = 2U;
-const unsigned char AST_FRAME_CONTROL   = 4U;
-const unsigned char AST_FRAME_IAX       = 6U;
-const unsigned char AST_FRAME_TEXT      = 7U;
+const uint8_t AST_FRAME_DTMF      = 1U;
+const uint8_t AST_FRAME_VOICE     = 2U;
+const uint8_t AST_FRAME_CONTROL   = 4U;
+const uint8_t AST_FRAME_IAX       = 6U;
+const uint8_t AST_FRAME_TEXT      = 7U;
 
-const unsigned char AST_CONTROL_HANGUP  = 1U;
-const unsigned char AST_CONTROL_RING    = 2U;
-const unsigned char AST_CONTROL_RINGING = 3U;
-const unsigned char AST_CONTROL_ANSWER  = 4U;
-const unsigned char AST_CONTROL_OPTION  = 11U;
-const unsigned char AST_CONTROL_KEY     = 12U;
-const unsigned char AST_CONTROL_UNKEY   = 13U;
-const unsigned char AST_CONTROL_STOP_SOUNDS = 255U;
+const uint8_t AST_CONTROL_HANGUP  = 1U;
+const uint8_t AST_CONTROL_RING    = 2U;
+const uint8_t AST_CONTROL_RINGING = 3U;
+const uint8_t AST_CONTROL_ANSWER  = 4U;
+const uint8_t AST_CONTROL_OPTION  = 11U;
+const uint8_t AST_CONTROL_KEY     = 12U;
+const uint8_t AST_CONTROL_UNKEY   = 13U;
+const uint8_t AST_CONTROL_STOP_SOUNDS = 255U;
 
-const unsigned char AST_FORMAT_ULAW     = 4U;
+const uint8_t AST_FORMAT_ULAW     = 4U;
 
-const unsigned char IAX_AUTH_MD5        = 2U;
+const uint8_t IAX_AUTH_MD5        = 2U;
 
-const unsigned char IAX_COMMAND_NEW     = 1U;
-const unsigned char IAX_COMMAND_PING    = 2U;
-const unsigned char IAX_COMMAND_PONG    = 3U;
-const unsigned char IAX_COMMAND_ACK     = 4U;
-const unsigned char IAX_COMMAND_HANGUP  = 5U;
-const unsigned char IAX_COMMAND_REJECT  = 6U;
-const unsigned char IAX_COMMAND_ACCEPT  = 7U;
-const unsigned char IAX_COMMAND_AUTHREQ = 8U;
-const unsigned char IAX_COMMAND_AUTHREP = 9U;
-const unsigned char IAX_COMMAND_INVAL   = 10U;
-const unsigned char IAX_COMMAND_LAGRQ   = 11U;
-const unsigned char IAX_COMMAND_LAGRP   = 12U;
-const unsigned char IAX_COMMAND_REGREQ  = 13U;
-const unsigned char IAX_COMMAND_REGAUTH = 14U;
-const unsigned char IAX_COMMAND_REGACK  = 15U;
-const unsigned char IAX_COMMAND_REGREJ  = 16U;
-const unsigned char IAX_COMMAND_VNAK    = 18U;
+const uint8_t IAX_COMMAND_NEW     = 1U;
+const uint8_t IAX_COMMAND_PING    = 2U;
+const uint8_t IAX_COMMAND_PONG    = 3U;
+const uint8_t IAX_COMMAND_ACK     = 4U;
+const uint8_t IAX_COMMAND_HANGUP  = 5U;
+const uint8_t IAX_COMMAND_REJECT  = 6U;
+const uint8_t IAX_COMMAND_ACCEPT  = 7U;
+const uint8_t IAX_COMMAND_AUTHREQ = 8U;
+const uint8_t IAX_COMMAND_AUTHREP = 9U;
+const uint8_t IAX_COMMAND_INVAL   = 10U;
+const uint8_t IAX_COMMAND_LAGRQ   = 11U;
+const uint8_t IAX_COMMAND_LAGRP   = 12U;
+const uint8_t IAX_COMMAND_REGREQ  = 13U;
+const uint8_t IAX_COMMAND_REGAUTH = 14U;
+const uint8_t IAX_COMMAND_REGACK  = 15U;
+const uint8_t IAX_COMMAND_REGREJ  = 16U;
+const uint8_t IAX_COMMAND_VNAK    = 18U;
 
-const unsigned char IAX_IE_CALLED_NUMBER  = 1U;
-const unsigned char IAX_IE_CALLING_NUMBER = 2U;
-const unsigned char IAX_IE_CALLING_NAME   = 4U;
-const unsigned char IAX_IE_CALLED_CONTEXT = 5U;
-const unsigned char IAX_IE_USERNAME       = 6U;
-const unsigned char IAX_IE_PASSWORD       = 7U;
-const unsigned char IAX_IE_CAPABILITY     = 8U;
-const unsigned char IAX_IE_FORMAT         = 9U;
-const unsigned char IAX_IE_VERSION        = 11U;
-const unsigned char IAX_IE_DNID           = 13U;
-const unsigned char IAX_IE_AUTHMETHODS    = 14U;
-const unsigned char IAX_IE_CHALLENGE      = 15U;
-const unsigned char IAX_IE_MD5_RESULT     = 16U;
-const unsigned char IAX_IE_APPARENT_ADDR  = 18U;
-const unsigned char IAX_IE_REFRESH        = 19U;
-const unsigned char IAX_IE_CAUSE          = 22U;
-const unsigned char IAX_IE_DATETIME       = 31U;
+const uint8_t IAX_IE_CALLED_NUMBER  = 1U;
+const uint8_t IAX_IE_CALLING_NUMBER = 2U;
+const uint8_t IAX_IE_CALLING_NAME   = 4U;
+const uint8_t IAX_IE_CALLED_CONTEXT = 5U;
+const uint8_t IAX_IE_USERNAME       = 6U;
+const uint8_t IAX_IE_PASSWORD       = 7U;
+const uint8_t IAX_IE_CAPABILITY     = 8U;
+const uint8_t IAX_IE_FORMAT         = 9U;
+const uint8_t IAX_IE_VERSION        = 11U;
+const uint8_t IAX_IE_DNID           = 13U;
+const uint8_t IAX_IE_AUTHMETHODS    = 14U;
+const uint8_t IAX_IE_CHALLENGE      = 15U;
+const uint8_t IAX_IE_MD5_RESULT     = 16U;
+const uint8_t IAX_IE_APPARENT_ADDR  = 18U;
+const uint8_t IAX_IE_REFRESH        = 19U;
+const uint8_t IAX_IE_CAUSE          = 22U;
+const uint8_t IAX_IE_DATETIME       = 31U;
 
-const unsigned char IAX_IE_RR_JITTER    = 46U;
-const unsigned char IAX_IE_RR_LOSS      = 47U;
-const unsigned char IAX_IE_RR_PKTS      = 48U;
-const unsigned char IAX_IE_RR_DELAY     = 49U;
-const unsigned char IAX_IE_RR_DROPPED   = 50U;
-const unsigned char IAX_IE_RR_OOO       = 51U;
+const uint8_t IAX_IE_RR_JITTER    = 46U;
+const uint8_t IAX_IE_RR_LOSS      = 47U;
+const uint8_t IAX_IE_RR_PKTS      = 48U;
+const uint8_t IAX_IE_RR_DELAY     = 49U;
+const uint8_t IAX_IE_RR_DROPPED   = 50U;
+const uint8_t IAX_IE_RR_OOO       = 51U;
 
 const unsigned int BUFFER_LENGTH = 1500U;
 
@@ -109,7 +109,7 @@ const unsigned int BUFFER_LENGTH = 1500U;
 #define	MD5_DIGEST_STRING_LENGTH	16
 #endif
 
-CIAXNetwork::CIAXNetwork(const std::string& callsign, const std::string& username, const std::string& password, const std::string& node, const std::string& localAddress, unsigned short localPort, const std::string& gatewayAddress, unsigned short gatewayPort, bool debug) :
+CIAXNetwork::CIAXNetwork(const std::string& callsign, const std::string& username, const std::string& password, const std::string& node, const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug) :
 m_callsign(callsign),
 m_username(username),
 m_password(password),
@@ -118,7 +118,6 @@ m_socket(localAddress, localPort),
 m_addr(),
 m_addrLen(0U),
 m_debug(debug),
-m_enabled(false),
 m_buffer(2000U, "FM Network"),
 m_status(IAXS_DISCONNECTED),
 m_retryTimer(1000U, 0U, 500U),
@@ -201,9 +200,6 @@ bool CIAXNetwork::writeStart()
 	if (m_status != IAXS_CONNECTED)
 		return false;
 
-	if (!m_enabled)
-		return false;
-
 	bool ret = writeKey(true);
 	if (!ret)
 		return false;
@@ -221,19 +217,16 @@ bool CIAXNetwork::writeData(const float* data, unsigned int nSamples)
 	if (m_status != IAXS_CONNECTED)
 		return false;
 
-	if (!m_enabled)
-		return false;
-
-	short audio[300U];
+	int16_t audio[300U];
 	for (unsigned int i = 0U; i < nSamples; i++)
 		audio[i] = short(data[i] * 32767.0F + 0.5F);		// Changing audio format from float to S16LE
 
 #if defined(DEBUG_IAX)
 	LogDebug("IAX audio sent");
 #endif
-	unsigned short ts = m_timestamp.elapsed();
+	uint16_t ts = m_timestamp.elapsed();
 
-	unsigned char buffer[300U];
+	uint8_t buffer[300U];
 
 	buffer[0U] = (m_sCallNo >> 8) & 0xFFU;
 	buffer[1U] = (m_sCallNo >> 0) & 0xFFU;
@@ -252,9 +245,6 @@ bool CIAXNetwork::writeData(const float* data, unsigned int nSamples)
 bool CIAXNetwork::writeEnd()
 {
 	if (m_status != IAXS_CONNECTED)
-		return false;
-
-	if (!m_enabled)
 		return false;
 
 	return writeKey(false);
@@ -284,7 +274,7 @@ void CIAXNetwork::clock(unsigned int ms)
 		m_pingTimer.start();
 	}
 
-	unsigned char buffer[BUFFER_LENGTH];
+	uint8_t buffer[BUFFER_LENGTH];
 
 	sockaddr_storage addr;
 	unsigned int addrlen;
@@ -301,8 +291,8 @@ void CIAXNetwork::clock(unsigned int ms)
 	if (m_debug)
 		CUtils::dump(1U, "FM IAX Network Data Received", buffer, length);
 
-	unsigned int ts = (buffer[4U] << 24) | (buffer[5U] << 16) | (buffer[6U] << 8) | (buffer[7U] << 0);
-	unsigned char iSeqNo = buffer[8U];
+	uint32_t ts = (buffer[4U] << 24) | (buffer[5U] << 16) | (buffer[6U] << 8) | (buffer[7U] << 0);
+	uint8_t iSeqNo = buffer[8U];
 
 	if (compareFrame(buffer, AST_FRAME_IAX, IAX_COMMAND_ACK)) {
 #if defined(DEBUG_IAX)
@@ -544,9 +534,6 @@ void CIAXNetwork::clock(unsigned int ms)
 
 		writeAck(ts);
 
-		if (!m_enabled)
-			return;
-
 		if (!m_keyed)
 			return;
 
@@ -555,8 +542,6 @@ void CIAXNetwork::clock(unsigned int ms)
 #if defined(DEBUG_IAX)
 		LogDebug("IAX audio received");
 #endif
-		if (!m_enabled)
-			return;
 
 		if (!m_keyed)
 			return;
@@ -577,17 +562,17 @@ unsigned int CIAXNetwork::readData(float* out, unsigned int nOut)
 	assert(out != nullptr);
 	assert(nOut > 0U);
 
-	unsigned int bytes = m_buffer.dataSize() / sizeof(unsigned char);
+	unsigned int bytes = m_buffer.dataSize() / sizeof(uint8_t);
 	if (bytes == 0U)
 		return 0U;
 
 	if (bytes < nOut)
 		nOut = bytes;
 
-	unsigned char buffer[1500U];
-	m_buffer.getData(buffer, nOut * sizeof(unsigned char));
+	uint8_t buffer[1500U];
+	m_buffer.getData(buffer, nOut * sizeof(uint8_t));
 
-	short audio[1500U];
+	int16_t audio[1500U];
 	uLawDecode(buffer, audio, nOut);
 
 	for (unsigned int i = 0U; i < nOut; i++)
@@ -620,16 +605,6 @@ void CIAXNetwork::close()
 	LogMessage("Closing FM IAX network connection");
 }
 
-void CIAXNetwork::enable(bool enabled)
-{
-	if (enabled && !m_enabled)
-		reset();
-	else if (!enabled && m_enabled)
-		reset();
-
-	m_enabled = enabled;
-}
-
 bool CIAXNetwork::writeNew(bool retry)
 {
 #if defined(DEBUG_IAX)
@@ -638,7 +613,7 @@ bool CIAXNetwork::writeNew(bool retry)
 	if (!retry)
 		m_sCallNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
+	uint16_t sCall = m_sCallNo | 0x8000U;
 
 	m_timestamp.start();
 
@@ -647,7 +622,7 @@ bool CIAXNetwork::writeNew(bool retry)
 
 	unsigned int length = 0U;
 
-	unsigned char buffer[100U];
+	uint8_t buffer[100U];
 
 	buffer[length++] = (sCall >> 8) & 0xFFU;
 	buffer[length++] = (sCall >> 0) & 0xFFU;
@@ -669,12 +644,12 @@ bool CIAXNetwork::writeNew(bool retry)
 	buffer[length++] = IAX_COMMAND_NEW;
 
 	buffer[length++] = IAX_IE_VERSION;
-	buffer[length++] = sizeof(unsigned short);
+	buffer[length++] = sizeof(uint16_t);
 	buffer[length++] = 0x00U;
 	buffer[length++] = IAX_PROTO_VERSION;
 
 	buffer[length++] = IAX_IE_CALLED_NUMBER;
-	buffer[length++] = m_node.size();
+	buffer[length++] = uint8_t(m_node.size());
 	for (std::string::const_iterator it = m_node.cbegin(); it != m_node.cend(); ++it)
 		buffer[length++] = *it;
 
@@ -682,17 +657,17 @@ bool CIAXNetwork::writeNew(bool retry)
 	buffer[length++] = 0U;
 
 	buffer[length++] = IAX_IE_CALLING_NAME;
-	buffer[length++] = m_callsign.size();
+	buffer[length++] = uint8_t(m_callsign.size());
 	for (std::string::const_iterator it = m_callsign.cbegin(); it != m_callsign.cend(); ++it)
 		buffer[length++] = *it;
 
 	buffer[length++] = IAX_IE_USERNAME;
-	buffer[length++] = m_username.size();
+	buffer[length++] = uint8_t(m_username.size());
 	for (std::string::const_iterator it = m_username.cbegin(); it != m_username.cend(); ++it)
 		buffer[length++] = *it;
 
 	buffer[length++] = IAX_IE_FORMAT;
-	buffer[length++] = sizeof(unsigned int);
+	buffer[length++] = sizeof(uint32_t);
 	buffer[length++] = 0x00U;
 	buffer[length++] = 0x00U;
 	buffer[length++] = 0x00U;
@@ -724,7 +699,7 @@ bool CIAXNetwork::writeAuthRep()
 		return false;
 	}
 
-	if (!::CryptHashData(hHash, (BYTE*)password.c_str(), password.size(), 0)) {
+	if (!::CryptHashData(hHash, (BYTE*)password.c_str(), DWORD(password.size()), 0)) {
 		printf("CryptHashData failed: %ld\n", ::GetLastError());
 		return false;
 	}
@@ -737,13 +712,13 @@ bool CIAXNetwork::writeAuthRep()
 
 	::CryptDestroyHash(hHash);
 #else
-	::MD5Data((unsigned char*)password.c_str(), password.size(), hash);
+	::MD5Data((uint8_t*)password.c_str(), password.size(), hash);
 #endif
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
-	unsigned int   ts    = m_timestamp.elapsed();
+	uint16_t sCall = m_sCallNo | 0x8000U;
+	uint32_t ts    = m_timestamp.elapsed();
 
-	unsigned char buffer[50U];
+	uint8_t buffer[50U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -783,10 +758,10 @@ bool CIAXNetwork::writeKey(bool key)
 #endif
 	m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
-	unsigned int   ts    = m_timestamp.elapsed();
+	uint16_t sCall = m_sCallNo | 0x8000U;
+	uint32_t ts    = m_timestamp.elapsed();
 
-	unsigned char buffer[15U];
+	uint8_t buffer[15U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -822,10 +797,10 @@ bool CIAXNetwork::writePing()
 #endif
 	m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
-	unsigned int   ts    = m_timestamp.elapsed();
+	uint16_t sCall = m_sCallNo | 0x8000U;
+	uint32_t ts    = m_timestamp.elapsed();
 
-	unsigned char buffer[15U];
+	uint8_t buffer[15U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -854,16 +829,16 @@ bool CIAXNetwork::writePing()
 	return m_socket.write(buffer, 12U, m_addr, m_addrLen);
 }
 
-bool CIAXNetwork::writePong(unsigned int ts)
+bool CIAXNetwork::writePong(uint32_t ts)
 {
 #if defined(DEBUG_IAX)
 	LogDebug("IAX PONG sent");
 #endif
 	m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
+	uint16_t sCall = m_sCallNo | 0x8000U;
 
-	unsigned char buffer[50U];
+	uint8_t buffer[50U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -885,40 +860,40 @@ bool CIAXNetwork::writePong(unsigned int ts)
 	buffer[11U] = IAX_COMMAND_PONG;
 
 	buffer[12U] = IAX_IE_RR_JITTER;
-	buffer[13U] = sizeof(unsigned int);
+	buffer[13U] = sizeof(uint32_t);
 	buffer[14U] = (m_rxJitter >> 24) & 0xFFU;
 	buffer[15U] = (m_rxJitter >> 16) & 0xFFU;
 	buffer[16U] = (m_rxJitter >> 8)  & 0xFFU;
 	buffer[17U] = (m_rxJitter >> 0)  & 0xFFU;
 
 	buffer[18U] = IAX_IE_RR_LOSS;
-	buffer[19U] = sizeof(unsigned int);
+	buffer[19U] = sizeof(uint32_t);
 	buffer[20U] = (m_rxLoss * 100U) / m_rxFrames;
 	buffer[21U] = (m_rxLoss >> 16) & 0xFFU;
 	buffer[22U] = (m_rxLoss >> 8)  & 0xFFU;
 	buffer[23U] = (m_rxLoss >> 0)  & 0xFFU;
 
 	buffer[24U] = IAX_IE_RR_PKTS;
-	buffer[25U] = sizeof(unsigned int);
+	buffer[25U] = sizeof(uint32_t);
 	buffer[26U] = (m_rxFrames >> 24) & 0xFFU;
 	buffer[27U] = (m_rxFrames >> 16) & 0xFFU;
 	buffer[28U] = (m_rxFrames >> 8)  & 0xFFU;
 	buffer[29U] = (m_rxFrames >> 0)  & 0xFFU;
 
 	buffer[30U] = IAX_IE_RR_DELAY;
-	buffer[31U] = sizeof(unsigned short);
+	buffer[31U] = sizeof(uint16_t);
 	buffer[32U] = (m_rxDelay >> 8)  & 0xFFU;
 	buffer[33U] = (m_rxDelay >> 0)  & 0xFFU;
 
 	buffer[34U] = IAX_IE_RR_DROPPED;
-	buffer[35U] = sizeof(unsigned int);
+	buffer[35U] = sizeof(uint32_t);
 	buffer[36U] = (m_rxDropped >> 24) & 0xFFU;
 	buffer[37U] = (m_rxDropped >> 16) & 0xFFU;
 	buffer[38U] = (m_rxDropped >> 8)  & 0xFFU;
 	buffer[39U] = (m_rxDropped >> 0)  & 0xFFU;
 
 	buffer[40U] = IAX_IE_RR_OOO;
-	buffer[41U] = sizeof(unsigned int);
+	buffer[41U] = sizeof(uint32_t);
 	buffer[42U] = (m_rxOOO >> 24) & 0xFFU;
 	buffer[43U] = (m_rxOOO >> 16) & 0xFFU;
 	buffer[44U] = (m_rxOOO >> 8)  & 0xFFU;
@@ -932,14 +907,14 @@ bool CIAXNetwork::writePong(unsigned int ts)
 	return m_socket.write(buffer, 46U, m_addr, m_addrLen);
 }
 
-bool CIAXNetwork::writeAck(unsigned int ts)
+bool CIAXNetwork::writeAck(uint32_t ts)
 {
 #if defined(DEBUG_IAX)
 	LogDebug("IAX ACK sent");
 #endif
-	unsigned short sCall = m_sCallNo | 0x8000U;
+	uint16_t sCall = m_sCallNo | 0x8000U;
 
-	unsigned char buffer[15U];
+	uint8_t buffer[15U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -968,16 +943,16 @@ bool CIAXNetwork::writeAck(unsigned int ts)
 	return m_socket.write(buffer, 12U, m_addr, m_addrLen);
 }
 
-bool CIAXNetwork::writeLagRp(unsigned int ts)
+bool CIAXNetwork::writeLagRp(uint32_t ts)
 {
 #if defined(DEBUG_IAX)
 	LogDebug("IAX LAGRP sent");
 #endif
 	m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
+	uint16_t sCall = m_sCallNo | 0x8000U;
 
-	unsigned char buffer[15U];
+	uint8_t buffer[15U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -1013,10 +988,10 @@ bool CIAXNetwork::writeLagRq()
 #endif
 	m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
-	unsigned int   ts    = m_timestamp.elapsed();
+	uint16_t sCall = m_sCallNo | 0x8000U;
+	uint32_t ts    = m_timestamp.elapsed();
 
-	unsigned char buffer[15U];
+	uint8_t buffer[15U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -1054,10 +1029,10 @@ bool CIAXNetwork::writeHangup()
 
 	m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
-	unsigned int   ts    = m_timestamp.elapsed();
+	uint16_t sCall = m_sCallNo | 0x8000U;
+	uint32_t ts    = m_timestamp.elapsed();
 
-	unsigned char buffer[50U];
+	uint8_t buffer[50U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -1079,20 +1054,20 @@ bool CIAXNetwork::writeHangup()
 	buffer[11U] = IAX_COMMAND_HANGUP;
 
 	buffer[12U] = IAX_IE_CAUSE;
-	buffer[13U] = ::strlen(REASON);
+	buffer[13U] = uint8_t(::strlen(REASON));
 	::memcpy(buffer + 14U, REASON, ::strlen(REASON));
 
 #if !defined(DEBUG_IAX)
 	if (m_debug)
 #endif
-		CUtils::dump(1U, "FM IAX Network Data Sent", buffer, 14U + ::strlen(REASON));
+		CUtils::dump(1U, "FM IAX Network Data Sent", buffer, 14U + (unsigned int)::strlen(REASON));
 
-	return m_socket.write(buffer, 14U + ::strlen(REASON), m_addr, m_addrLen);
+	return m_socket.write(buffer, 14U + (unsigned int)::strlen(REASON), m_addr, m_addrLen);
 }
 
 bool CIAXNetwork::writeRegReq(bool retry)
 {
-	const unsigned short REFRESH_TIME = 60U;
+	const uint16_t REFRESH_TIME = 60U;
 
 #if defined(DEBUG_IAX)
 	LogDebug("IAX REGREQ sent");
@@ -1100,13 +1075,13 @@ bool CIAXNetwork::writeRegReq(bool retry)
 	if (!retry)
 		m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
-	unsigned short dCall = m_dCallNo;
+	uint16_t sCall = m_sCallNo | 0x8000U;
+	uint16_t dCall = m_dCallNo;
 	if (retry)
 		dCall |= 0x8000U;
-	unsigned int   ts    = m_timestamp.elapsed();
+	uint32_t ts    = m_timestamp.elapsed();
 
-	unsigned char buffer[70U];
+	uint8_t buffer[70U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -1128,10 +1103,10 @@ bool CIAXNetwork::writeRegReq(bool retry)
 	buffer[11U] = IAX_COMMAND_REGREQ;
 
 	buffer[12U] = IAX_IE_USERNAME;
-	buffer[13U] = m_username.size();
+	buffer[13U] = uint8_t(m_username.size());
 	::memcpy(buffer + 14U, m_username.c_str(), m_username.size());
 
-	unsigned int offset = 14U + m_username.size();
+	unsigned int offset = 14U + (unsigned int)m_username.size();
 
 	if (m_dCallNo > 0U) {
 		std::string password = m_seed + m_password;
@@ -1145,7 +1120,7 @@ bool CIAXNetwork::writeRegReq(bool retry)
 			return false;
 		}
 
-		if (!::CryptHashData(hHash, (BYTE*)password.c_str(), password.size(), 0)) {
+		if (!::CryptHashData(hHash, (BYTE*)password.c_str(), DWORD(password.size()), 0)) {
 			printf("CryptHashData failed: %ld\n", ::GetLastError());
 			return false;
 		}
@@ -1158,7 +1133,7 @@ bool CIAXNetwork::writeRegReq(bool retry)
 
 		::CryptDestroyHash(hHash);
 #else
-		::MD5Data((unsigned char*)password.c_str(), password.size(), hash);
+		::MD5Data((uint8_t*)password.c_str(), password.size(), hash);
 #endif
 
 		buffer[offset++] = IAX_IE_MD5_RESULT;
@@ -1169,7 +1144,7 @@ bool CIAXNetwork::writeRegReq(bool retry)
 	}
 
 	buffer[offset++] = IAX_IE_REFRESH;
-	buffer[offset++] = sizeof(unsigned short);
+	buffer[offset++] = sizeof(uint16_t);
 	buffer[offset++] = (REFRESH_TIME >> 8) & 0xFFU;
 	buffer[offset++] = (REFRESH_TIME >> 0) & 0xFFU;
 
@@ -1181,19 +1156,19 @@ bool CIAXNetwork::writeRegReq(bool retry)
 	return m_socket.write(buffer, offset, m_addr, m_addrLen);
 }
 
-void CIAXNetwork::uLawEncode(const short* audio, unsigned char* buffer, unsigned int length) const
+void CIAXNetwork::uLawEncode(const int16_t* audio, uint8_t* buffer, unsigned int length) const
 {
 	assert(audio != nullptr);
 	assert(buffer != nullptr);
 
-	const unsigned short MULAW_MAX  = 0x1FFFU;
-	const unsigned short MULAW_BIAS = 33U;
+	const uint16_t MULAW_MAX  = 0x1FFFU;
+	const uint16_t MULAW_BIAS = 33U;
 
 	for (unsigned int i = 0U; i < length; i++) {
-		unsigned short mask = 0x1000U;
-		unsigned char  sign;
-		unsigned char position = 12U;
-		unsigned short number;
+		uint16_t mask = 0x1000U;
+		uint8_t  sign;
+		uint8_t  position = 12U;
+		uint16_t number;
 
 		if (audio[i] < 0) {
 			number = -audio[i];
@@ -1210,46 +1185,46 @@ void CIAXNetwork::uLawEncode(const short* audio, unsigned char* buffer, unsigned
 		for (; ((number & mask) != mask && position >= 5U); mask >>= 1, position--)
 			;
 
-		unsigned char lsb = (number >> (position - 4U)) & 0x0FU;
+		uint8_t lsb = (number >> (position - 4U)) & 0x0FU;
 		buffer[i] = ~(sign | ((position - 5U) << 4) | lsb);
 	}
 }
 
-void CIAXNetwork::uLawDecode(const unsigned char* buffer, short* audio, unsigned int length) const
+void CIAXNetwork::uLawDecode(const uint8_t* buffer, int16_t* audio, unsigned int length) const
 {
 	assert(buffer != nullptr);
 	assert(audio != nullptr);
 
-	const unsigned short MULAW_BIAS = 33U;
+	const uint16_t MULAW_BIAS = 33U;
 
 	for (unsigned int i = 0U; i < length; i++) {
 		bool sign = true;
 
-		unsigned char number = ~buffer[i];
+		uint8_t number = ~buffer[i];
 		if (number & 0x80U) {
 			number &= 0x7FU;
 			sign = false;
 		}
 
-		unsigned char position = ((number & 0xF0U) >> 4) + 5U;
-		short decoded = ((1 << position) | ((number & 0x0FU) << (position - 4U))
+		uint8_t position = ((number & 0xF0U) >> 4) + 5U;
+		int16_t decoded = ((1 << position) | ((number & 0x0FU) << (position - 4U))
 			 | (1 << (position - 5U))) - MULAW_BIAS;
 
 		audio[i] = sign ? decoded : -decoded;
 	}
 }
 
-bool CIAXNetwork::writeAudio(const short* audio, unsigned int length)
+bool CIAXNetwork::writeAudio(const int16_t* audio, unsigned int length)
 {
 #if defined(DEBUG_IAX)
 	LogDebug("IAX ULAW sent");
 #endif
 	m_oSeqNo++;
 
-	unsigned short sCall = m_sCallNo | 0x8000U;
-	unsigned int   ts    = m_timestamp.elapsed();
+	uint16_t sCall = m_sCallNo | 0x8000U;
+	uint32_t ts    = m_timestamp.elapsed();
 
-	unsigned char buffer[300U];
+	uint8_t buffer[300U];
 
 	buffer[0U] = (sCall >> 8) & 0xFFU;
 	buffer[1U] = (sCall >> 0) & 0xFFU;
@@ -1278,7 +1253,7 @@ bool CIAXNetwork::writeAudio(const short* audio, unsigned int length)
 	return m_socket.write(buffer, 12U + length, m_addr, m_addrLen);
 }
 
-bool CIAXNetwork::compareFrame(const unsigned char* buffer, unsigned char type1, unsigned char type2) const
+bool CIAXNetwork::compareFrame(const uint8_t* buffer, uint8_t type1, uint8_t type2) const
 {
 	assert(buffer != nullptr);
 

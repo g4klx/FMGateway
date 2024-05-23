@@ -32,12 +32,10 @@
 
 class CRAWNetwork : public INetwork {
 public:
-	CRAWNetwork(const std::string& localAddress, unsigned short localPort, const std::string& gatewayAddress, unsigned short gatewayPort, unsigned int sampleRate, const std::string& squelchFile, bool debug);
+	CRAWNetwork(const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, unsigned int sampleRate, const std::string& squelchFile, bool debug);
 	virtual ~CRAWNetwork();
 
 	virtual bool open();
-
-	virtual void enable(bool enabled);
 
 	virtual bool writeStart();
 
@@ -60,8 +58,7 @@ private:
 	unsigned int        m_sampleRate;
 	std::string         m_squelchFile;
 	bool                m_debug;
-	bool                m_enabled;
-	CRingBuffer<unsigned char> m_buffer;
+	CRingBuffer<uint8_t> m_buffer;
 #if defined(HAS_SRC)
 	SRC_STATE*          m_resampler;
 #endif

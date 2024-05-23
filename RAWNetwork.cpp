@@ -35,14 +35,13 @@ const unsigned int MMDVM_SAMPLERATE = 8000U;
 
 const unsigned int BUFFER_LENGTH = 1500U;
 
-CRAWNetwork::CRAWNetwork(const std::string& localAddress, unsigned short localPort, const std::string& gatewayAddress, unsigned short gatewayPort, unsigned int sampleRate, const std::string& squelchFile, bool debug) :
+CRAWNetwork::CRAWNetwork(const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, unsigned int sampleRate, const std::string& squelchFile, bool debug) :
 m_socket(localAddress, localPort),
 m_addr(),
 m_addrLen(0U),
 m_sampleRate(sampleRate),
 m_squelchFile(squelchFile),
 m_debug(debug),
-m_enabled(false),
 m_buffer(2000U, "FM Network"),
 #if defined(HAS_SRC)
 m_resampler(nullptr),
@@ -108,7 +107,7 @@ bool CRAWNetwork::writeData(const float* in, unsigned int nIn)
 	assert(in != nullptr);
 	assert(nIn > 0U);
 
-	unsigned char buffer[2000U];
+	uint8_t buffer[2000U];
 
 	unsigned int length = 0U;
 
@@ -168,7 +167,7 @@ bool CRAWNetwork::writeEnd()
 
 void CRAWNetwork::clock(unsigned int ms)
 {
-	unsigned char buffer[BUFFER_LENGTH];
+	uint8_t buffer[BUFFER_LENGTH];
 
 	sockaddr_storage addr;
 	unsigned int addrlen;
@@ -181,9 +180,6 @@ void CRAWNetwork::clock(unsigned int ms)
 		return;
 	}
 
-	if (!m_enabled)
-		return;
-
 	if (m_debug)
 		CUtils::dump(1U, "FM RAW Network Data Received", buffer, length);
 
@@ -195,7 +191,7 @@ unsigned int CRAWNetwork::readData(float* out, unsigned int nOut)
 	assert(out != nullptr);
 	assert(nOut > 0U);
 
-	unsigned int bytes = m_buffer.dataSize() / sizeof(unsigned short);
+	unsigned int bytes = m_buffer.dataSize() / sizeof(uint16_t);
 	if (bytes == 0U)
 		return 0U;
 
@@ -208,8 +204,8 @@ unsigned int CRAWNetwork::readData(float* out, unsigned int nOut)
 			nOut = (nIn * MMDVM_SAMPLERATE) / m_sampleRate;
 		}
 
-		unsigned char buffer[2000U];
-		m_buffer.getData(buffer, nIn * sizeof(unsigned short));
+		uint8_t buffer[2000U];
+		m_buffer.getData(buffer, nIn * sizeof(uint16_t));
 
 		float in[1000U];
 
@@ -238,8 +234,8 @@ unsigned int CRAWNetwork::readData(float* out, unsigned int nOut)
 		if (bytes < nOut)
 			nOut = bytes;
 
-		unsigned char buffer[1500U];
-		m_buffer.getData(buffer, nOut * sizeof(unsigned short));
+		uint8_t buffer[1500U];
+		m_buffer.getData(buffer, nOut * sizeof(uint16_t));
 
 		for (unsigned int i = 0U; i < nOut; i++) {
 			short val = ((buffer[i * 2U + 0U] & 0xFFU) << 0) + ((buffer[i * 2U + 1U] & 0xFFU) << 8);
@@ -266,14 +262,3 @@ void CRAWNetwork::close()
 
 	LogMessage("Closing FM RAW network connection");
 }
-
-void CRAWNetwork::enable(bool enabled)
-{
-	if (enabled && !m_enabled)
-		reset();
-	else if (!enabled && m_enabled)
-		reset();
-
-	m_enabled = enabled;
-}
-

@@ -33,13 +33,12 @@
 
 const unsigned int BUFFER_LENGTH = 1500U;
 
-CUSRPNetwork::CUSRPNetwork(const std::string& callsign, const std::string& localAddress, unsigned short localPort, const std::string& gatewayAddress, unsigned short gatewayPort, bool debug) :
+CUSRPNetwork::CUSRPNetwork(const std::string& callsign, const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug) :
 m_callsign(callsign),
 m_socket(localAddress, localPort),
 m_addr(),
 m_addrLen(0U),
 m_debug(debug),
-m_enabled(false),
 m_buffer(2000U, "FM Network"),
 m_seqNo(0U)
 {
@@ -74,7 +73,7 @@ bool CUSRPNetwork::open()
 
 bool CUSRPNetwork::writeStart()
 {
-	unsigned char buffer[500U];
+	uint8_t buffer[500U];
 	::memset(buffer, 0x00U, 500U);
 
 	unsigned int length = 0U;
@@ -126,7 +125,7 @@ bool CUSRPNetwork::writeStart()
 	buffer[length++] = 0x08U;
 
 	// TLV Length
-	buffer[length++] = 3U + 4U + 3U + 1U + 1U + m_callsign.size() + 1U;
+	buffer[length++] = 3U + 4U + 3U + 1U + 1U + uint8_t(m_callsign.size()) + 1U;
 
 	// DMR Id
 	buffer[length++] = 0x00U;
@@ -174,7 +173,7 @@ bool CUSRPNetwork::writeData(const float* data, unsigned int nSamples)
 	assert(data != nullptr);
 	assert(nSamples > 0U);
 
-	unsigned char buffer[500U];
+	uint8_t buffer[500U];
 	::memset(buffer, 0x00U, 500U);
 
 	unsigned int length = 0U;
@@ -239,7 +238,7 @@ bool CUSRPNetwork::writeData(const float* data, unsigned int nSamples)
 
 bool CUSRPNetwork::writeEnd()
 {
-	unsigned char buffer[500U];
+	uint8_t buffer[500U];
 	::memset(buffer, 0x00U, 500U);
 
 	unsigned int length = 0U;
@@ -303,7 +302,7 @@ bool CUSRPNetwork::writeEnd()
 
 void CUSRPNetwork::clock(unsigned int ms)
 {
-	unsigned char buffer[BUFFER_LENGTH];
+	uint8_t buffer[BUFFER_LENGTH];
 
 	sockaddr_storage addr;
 	unsigned int addrlen;
@@ -316,9 +315,6 @@ void CUSRPNetwork::clock(unsigned int ms)
 		LogMessage("FM USRP packet received from an invalid source");
 		return;
 	}
-
-	if (!m_enabled)
-		return;
 
 	if (m_debug)
 		CUtils::dump(1U, "FM USRP Network Data Received", buffer, length);
@@ -345,15 +341,15 @@ unsigned int CUSRPNetwork::readData(float* out, unsigned int nOut)
 	assert(out != nullptr);
 	assert(nOut > 0U);
 
-	unsigned int bytes = m_buffer.dataSize() / sizeof(unsigned short);
+	unsigned int bytes = m_buffer.dataSize() / sizeof(uint16_t);
 	if (bytes == 0U)
 		return 0U;
 
 	if (bytes < nOut)
 		nOut = bytes;
 
-	unsigned char buffer[1500U];
-	m_buffer.getData(buffer, nOut * sizeof(unsigned short));
+	uint8_t buffer[1500U];
+	m_buffer.getData(buffer, nOut * sizeof(uint16_t));
 
 	for (unsigned int i = 0U; i < nOut; i++) {
 		short val = ((buffer[i * 2U + 0U] & 0xFFU) << 0) + ((buffer[i * 2U + 1U] & 0xFFU) << 8);
@@ -374,14 +370,3 @@ void CUSRPNetwork::close()
 
 	LogMessage("Closing FM USRP network connection");
 }
-
-void CUSRPNetwork::enable(bool enabled)
-{
-	if (enabled && !m_enabled)
-		reset();
-	else if (!enabled && m_enabled)
-		reset();
-
-	m_enabled = enabled;
-}
-
