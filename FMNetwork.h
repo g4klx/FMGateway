@@ -44,7 +44,11 @@ public:
 
 	NETWORK_TYPE readType() const;
 
+	std::string readStart();
+
 	unsigned int readData(float* out, unsigned int nOut);
+
+	void readEnd();
 
 	void reset();
 

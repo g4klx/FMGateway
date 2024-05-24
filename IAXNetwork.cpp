@@ -195,7 +195,7 @@ bool CIAXNetwork::open()
 	return true;
 }
 
-bool CIAXNetwork::writeStart()
+bool CIAXNetwork::writeStart(const std::string& callsign)
 {
 	if (m_status != IAXS_CONNECTED)
 		return false;

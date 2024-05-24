@@ -143,18 +143,18 @@ void CFMNetwork::clock(unsigned int ms)
 	if (m_debug)
 		CUtils::dump(1U, "FM Network Data Received", buffer, length);
 
-	if (::memcmp(buffer, "FMS", 3U) == 0) {
-		uint16_t len = 3U;
+	if (::memcmp(buffer, "FMD", 3U) == 0) {
+		uint16_t len = length;
 		m_buffer.addData((uint8_t*)&len, sizeof(uint16_t));
-		m_buffer.addData(buffer, 3U);
+		m_buffer.addData(buffer, length);
+	} else if (::memcmp(buffer, "FMS", 3U) == 0) {
+		uint16_t len = length;
+		m_buffer.addData((uint8_t*)&len, sizeof(uint16_t));
+		m_buffer.addData(buffer, length);
 	} else if (::memcmp(buffer, "FME", 3U) == 0) {
 		uint16_t len = 3U;
 		m_buffer.addData((uint8_t*)&len, sizeof(uint16_t));
 		m_buffer.addData(buffer, 3U);
-	} else if (::memcmp(buffer, "FMD", 3U) == 0) {
-		uint16_t len = length;
-		m_buffer.addData((uint8_t*)&len, sizeof(uint16_t));
-		m_buffer.addData(buffer, length);
 	}
 }
 
@@ -180,6 +180,26 @@ NETWORK_TYPE CFMNetwork::readType() const
 	return NT_DATA;		// ???
 }
 
+std::string CFMNetwork::readStart()
+{
+	unsigned int length = m_buffer.dataSize();
+	if (length == 0U)
+		return "";
+
+	uint16_t len = 0U;
+	m_buffer.getData((uint8_t*)&len, sizeof(uint16_t));
+
+	uint8_t buffer[BUFFER_LENGTH];
+	m_buffer.getData(buffer, len);
+
+	if (::memcmp(buffer, "FMS", 3U) != 0)
+		assert(false);
+
+	char* callsign = (char*)(buffer + 3U);
+
+	return std::string(callsign, ::strlen(callsign));
+}
+
 unsigned int CFMNetwork::readData(float* out, unsigned int nOut)
 {
 	assert(out != nullptr);
@@ -195,20 +215,37 @@ unsigned int CFMNetwork::readData(float* out, unsigned int nOut)
 	uint8_t buffer[BUFFER_LENGTH];
 	m_buffer.getData(buffer, len);
 
+	if (::memcmp(buffer, "FMD", 3U) != 0)
+		assert(false);
+
 	unsigned int nSamples = (len - 3U) / sizeof(uint16_t);
 
 	if (nOut < nSamples)
 		nSamples = nOut;
 
-	if (::memcmp(buffer, "FMD", 3U) == 0) {
-		const uint8_t* data = buffer + 3U;
-		for (unsigned int i = 0U; i < nSamples; i++) {
-			short val = ((data[i * 2U + 0U] & 0xFFU) << 0) + ((data[i * 2U + 1U] & 0xFFU) << 8);
-			out[i] = float(val) / 65536.0F;
-		}
+	const uint8_t* data = buffer + 3U;
+	for (unsigned int i = 0U; i < nSamples; i++) {
+		short val = ((data[i * 2U + 0U] & 0xFFU) << 0) + ((data[i * 2U + 1U] & 0xFFU) << 8);
+		out[i] = float(val) / 65536.0F;
 	}
 
 	return nSamples;
+}
+
+void CFMNetwork::readEnd()
+{
+	unsigned int length = m_buffer.dataSize();
+	if (length == 0U)
+		return ;
+
+	uint16_t len = 0U;
+	m_buffer.getData((uint8_t*)&len, sizeof(uint16_t));
+
+	uint8_t buffer[BUFFER_LENGTH];
+	m_buffer.getData(buffer, len);
+
+	if (::memcmp(buffer, "FME", 3U) != 0)
+		assert(false);
 }
 
 void CFMNetwork::reset()

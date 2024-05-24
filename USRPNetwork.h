@@ -28,12 +28,12 @@
 
 class CUSRPNetwork : public INetwork {
 public:
-	CUSRPNetwork(const std::string& callsign, const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug);
+	CUSRPNetwork(const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug);
 	virtual ~CUSRPNetwork();
 
 	virtual bool open();
 
-	virtual bool writeStart();
+	virtual bool writeStart(const std::string& callsign);
 
 	virtual bool writeData(const float* data, unsigned int nSamples);
 
@@ -48,7 +48,6 @@ public:
 	virtual void clock(unsigned int ms);
 
 private:
-	std::string         m_callsign;
 	CUDPSocket          m_socket;
 	sockaddr_storage    m_addr;
 	unsigned int        m_addrLen;

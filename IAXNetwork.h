@@ -42,7 +42,7 @@ public:
 
 	virtual bool open();
 
-	virtual bool writeStart();
+	virtual bool writeStart(const std::string& callsign);
 
 	virtual bool writeData(const float* data, unsigned int nSamples);
 

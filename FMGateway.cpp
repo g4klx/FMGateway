@@ -222,7 +222,7 @@ int CFMGateway::run()
 
 	INetwork* network = nullptr;
 	if (conf.getProtocol() == "USRP") {
-		network = new CUSRPNetwork(conf.getCallsign(), conf.getUSRPLocalAddress(), conf.getUSRPLocalPort(), conf.getUSRPRemoteAddress(), conf.getUSRPRemotePort(), conf.getUSRPDebug());
+		network = new CUSRPNetwork(conf.getUSRPLocalAddress(), conf.getUSRPLocalPort(), conf.getUSRPRemoteAddress(), conf.getUSRPRemotePort(), conf.getUSRPDebug());
 	} else if (conf.getProtocol() == "RAW") {
 		network = new CRAWNetwork(conf.getRAWLocalAddress(), conf.getRAWLocalPort(), conf.getRAWRemoteAddress(), conf.getRAWRemotePort(), conf.getRAWSampleRate(), conf.getRAWSquelchFile(), conf.getRAWDebug());
 	} else if (conf.getProtocol() == "IAX") {
@@ -246,29 +246,31 @@ int CFMGateway::run()
 		float buffer[BUFFER_LENGTH];
 
 		NETWORK_TYPE type = localNetwork.readType();
-		unsigned int n = 0U;
 
 		switch (type) {
-		case NT_START:
-			localNetwork.readData(buffer, BUFFER_LENGTH);
-			network->writeStart();
+		case NT_START: {
+				std::string callsign = localNetwork.readStart();
+				network->writeStart(callsign);
+			}
 			break;
 
-		case NT_DATA:
-			n = localNetwork.readData(buffer, BUFFER_LENGTH);
-			network->writeData(buffer, n);
+		case NT_DATA: {
+				unsigned int n = localNetwork.readData(buffer, BUFFER_LENGTH);
+				network->writeData(buffer, n);
+			}
 			break;
 
-		case NT_END:
-			localNetwork.readData(buffer, BUFFER_LENGTH);
-			network->writeEnd();
+		case NT_END: {
+				localNetwork.readEnd();
+				network->writeEnd();
+			}
 			break;
 
 		default:
 			break;
 		}
 
-		n = network->readData(buffer, BUFFER_LENGTH);
+		unsigned int n = network->readData(buffer, BUFFER_LENGTH);
 		if (n > 0U)
 			localNetwork.writeData(buffer, n);
 
