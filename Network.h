@@ -28,7 +28,7 @@ public:
 
 	virtual bool open() = 0;
 
-	virtual bool writeStart() = 0;
+	virtual bool writeStart(const std::string& callsign) = 0;
 
 	virtual bool writeData(const float* data, unsigned int nSamples) = 0;
 

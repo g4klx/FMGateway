@@ -33,8 +33,7 @@
 
 const unsigned int BUFFER_LENGTH = 1500U;
 
-CUSRPNetwork::CUSRPNetwork(const std::string& callsign, const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug) :
-m_callsign(callsign),
+CUSRPNetwork::CUSRPNetwork(const std::string& localAddress, uint16_t localPort, const std::string& gatewayAddress, uint16_t gatewayPort, bool debug) :
 m_socket(localAddress, localPort),
 m_addr(),
 m_addrLen(0U),
@@ -42,17 +41,11 @@ m_debug(debug),
 m_buffer(2000U, "FM Network"),
 m_seqNo(0U)
 {
-	assert(!callsign.empty());
 	assert(gatewayPort > 0U);
 	assert(!gatewayAddress.empty());
 
 	if (CUDPSocket::lookup(gatewayAddress, gatewayPort, m_addr, m_addrLen) != 0)
 		m_addrLen = 0U;
-
-	// Remove any trailing letters in the callsign
-	size_t pos = callsign.find_first_of(' ');
-	if (pos != std::string::npos)
-		m_callsign = callsign.substr(0U, pos);
 }
 
 CUSRPNetwork::~CUSRPNetwork()
@@ -71,7 +64,7 @@ bool CUSRPNetwork::open()
 	return m_socket.open(m_addr);
 }
 
-bool CUSRPNetwork::writeStart()
+bool CUSRPNetwork::writeStart(const std::string& callsign)
 {
 	uint8_t buffer[500U];
 	::memset(buffer, 0x00U, 500U);
@@ -125,7 +118,7 @@ bool CUSRPNetwork::writeStart()
 	buffer[length++] = 0x08U;
 
 	// TLV Length
-	buffer[length++] = 3U + 4U + 3U + 1U + 1U + uint8_t(m_callsign.size()) + 1U;
+	buffer[length++] = 3U + 4U + 3U + 1U + 1U + uint8_t(callsign.size()) + 1U;
 
 	// DMR Id
 	buffer[length++] = 0x00U;
@@ -150,7 +143,7 @@ bool CUSRPNetwork::writeStart()
 	buffer[length++] = 0x00U;
 
 	// Callsign
-	for (std::string::const_iterator it = m_callsign.cbegin(); it != m_callsign.cend(); ++it)
+	for (std::string::const_iterator it = callsign.cbegin(); it != callsign.cend(); ++it)
 		buffer[length++] = *it;
 
 	// End of Metadata

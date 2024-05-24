@@ -92,7 +92,7 @@ bool CRAWNetwork::open()
 	return m_socket.open(m_addr);
 }
 
-bool CRAWNetwork::writeStart()
+bool CRAWNetwork::writeStart(const std::string& callsign)
 {
 	if (m_fp != nullptr) {
 		::fputs("O", m_fp);
