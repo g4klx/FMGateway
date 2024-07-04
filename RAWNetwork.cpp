@@ -45,8 +45,8 @@ m_debug(debug),
 m_buffer(2000U, "FM Network"),
 #if defined(HAS_SRC)
 m_resampler(nullptr),
-#endif
 m_error(0),
+#endif
 m_fp(nullptr)
 {
 	assert(gatewayPort > 0U);

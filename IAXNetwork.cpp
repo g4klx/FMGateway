@@ -31,12 +31,6 @@
 #include <unistd.h>
 #endif
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <wincrypt.h>
-#else
-#include <md5.h>
-#endif
-
 #define	DEBUG_IAX
 
 const uint8_t IAX_PROTO_VERSION   = 2U;

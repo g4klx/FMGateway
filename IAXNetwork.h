@@ -28,6 +28,12 @@
 #include <cstdint>
 #include <string>
 
+#if defined(_WIN32) || defined(_WIN64)
+#include <wincrypt.h>
+#else
+#include <md5.h>
+#endif
+
 enum IAX_STATUS {
 	IAXS_DISCONNECTED,
 	IAXS_CONNECTING,
