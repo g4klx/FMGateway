@@ -110,15 +110,21 @@ int main(int argc, char** argv)
 
 		delete gateway;
 
-		if (m_signal == 2)
-			::LogInfo("FMGateway-%s exited on receipt of SIGINT", VERSION);
 
-		if (m_signal == 15)
-			::LogInfo("FMGateway-%s exited on receipt of SIGTERM", VERSION);
-
-		if (m_signal == 1)
-			::LogInfo("FMGateway-%s restarted on receipt of SIGHUP", VERSION);
-
+		switch (m_signal) {
+			case 2:
+				::LogInfo("FMGateway-%s exited on receipt of SIGINT", VERSION);
+				break;
+			case 15:
+				::LogInfo("FMGateway-%s exited on receipt of SIGTERM", VERSION);
+				break;
+			case 1:
+				::LogInfo("FMGateway-%s is restarting on receipt of SIGHUP", VERSION);
+				break;
+			default:
+				::LogInfo("FMGateway-%s exited on receipt of an unknown signal", VERSION);
+				break;
+		}
 	} while (m_signal == 1);
 
 	::LogFinalise();
@@ -153,7 +159,7 @@ int CFMGateway::run()
 		pid_t pid = ::fork();
 		if (pid == -1) {
 			::fprintf(stderr, "Couldn't fork() , exiting\n");
-			return -1;
+			return 1;
 		} else if (pid != 0) {
 			exit(EXIT_SUCCESS);
 		}
@@ -161,13 +167,13 @@ int CFMGateway::run()
 		// Create new session and process group
 		if (::setsid() == -1) {
 			::fprintf(stderr, "Couldn't setsid(), exiting\n");
-			return -1;
+			return 1;
 		}
 
 		// Set the working directory to the root directory
 		if (::chdir("/") == -1) {
 			::fprintf(stderr, "Couldn't cd /, exiting\n");
-			return -1;
+			return 1;
 		}
 
 		// If we are currently root...
@@ -175,7 +181,7 @@ int CFMGateway::run()
 			struct passwd* user = ::getpwnam("mmdvm");
 			if (user == nullptr) {
 				::fprintf(stderr, "Could not get the mmdvm user, exiting\n");
-				return -1;
+				return 1;
 			}
 
 			uid_t mmdvm_uid = user->pw_uid;
@@ -184,18 +190,18 @@ int CFMGateway::run()
 			// Set user and group ID's to mmdvm:mmdvm
 			if (setgid(mmdvm_gid) != 0) {
 				::fprintf(stderr, "Could not set mmdvm GID, exiting\n");
-				return -1;
+				return 1;
 			}
 
 			if (setuid(mmdvm_uid) != 0) {
 				::fprintf(stderr, "Could not set mmdvm UID, exiting\n");
-				return -1;
+				return 1;
 			}
 
 			// Double check it worked (AKA Paranoia)
 			if (setuid(0) != -1) {
 				::fprintf(stderr, "It's possible to regain root - something is wrong!, exiting\n");
-				return -1;
+				return 1;
 			}
 		}
 	}
@@ -221,7 +227,7 @@ int CFMGateway::run()
 	CFMNetwork localNetwork(conf.getNetworkLocalAddress(), conf.getNetworkLocalPort(), conf.getNetworkRptAddress(), conf.getNetworkRptPort(), conf.getNetworkDebug());
 	ret = localNetwork.open();
 	if (!ret)
-		return -1;
+		return 1;
 
 	INetwork* network = nullptr;
 	if (conf.getProtocol() == "USRP") {
@@ -232,12 +238,12 @@ int CFMGateway::run()
 		network = new CIAXNetwork(conf.getCallsign(), conf.getIAXUsername(), conf.getIAXPassword(), conf.getIAXNode(), conf.getIAXLocalAddress(), conf.getIAXLocalPort(), conf.getIAXRemoteAddress(), conf.getIAXRemotePort(), conf.getIAXDebug());
 	} else {
 		LogError("Invalid FM network protocol specified - %s", conf.getProtocol().c_str());
-		return false;
+		return 1;
 	}
 
 	ret = network->open();
 	if (!ret)
-		return -1;
+		return 1;
 
 	CStopWatch stopWatch;
 	stopWatch.start();
