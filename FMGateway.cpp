@@ -100,21 +100,29 @@ int main(int argc, char** argv)
 
 	do {
 		m_signal = 0;
+		m_killed = false;
 
 		CFMGateway* gateway = new CFMGateway(std::string(iniFile));
 		ret = gateway->run();
 
 		delete gateway;
 
-		if (m_signal == 2)
-			::LogInfo("FMGateway-%s exited on receipt of SIGINT", VERSION);
-
-		if (m_signal == 15)
-			::LogInfo("FMGateway-%s exited on receipt of SIGTERM", VERSION);
-
-		if (m_signal == 1)
-			::LogInfo("FMGateway-%s restarted on receipt of SIGHUP", VERSION);
-
+		switch (m_signal) {
+			case 0:
+				break;
+			case 2:
+				::LogInfo("FMGateway-%s exited on receipt of SIGINT", VERSION);
+				break;
+			case 15:
+				::LogInfo("FMGateway-%s exited on receipt of SIGTERM", VERSION);
+				break;
+			case 1:
+				::LogInfo("FMGateway-%s is restarting on receipt of SIGHUP", VERSION);
+				break;
+			default:
+				::LogInfo("FMGateway-%s exited on receipt of an unknown signal", VERSION);
+				break;
+		}
 	} while (m_signal == 1);
 
 	::LogFinalise();
