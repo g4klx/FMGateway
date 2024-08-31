@@ -61,8 +61,8 @@ private:
 	CRingBuffer<uint8_t> m_buffer;
 #if defined(HAS_SRC)
 	SRC_STATE*          m_resampler;
-#endif
 	int                 m_error;
+#endif
 	FILE*               m_fp;
 };
 

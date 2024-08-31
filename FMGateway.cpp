@@ -104,14 +104,16 @@ int main(int argc, char** argv)
 
 	do {
 		m_signal = 0;
+		m_killed = false;
 
 		CFMGateway* gateway = new CFMGateway(std::string(iniFile));
 		ret = gateway->run();
 
 		delete gateway;
 
-
 		switch (m_signal) {
+			case 0:
+				break;
 			case 2:
 				::LogInfo("FMGateway-%s exited on receipt of SIGINT", VERSION);
 				break;
