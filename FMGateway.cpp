@@ -1,5 +1,5 @@
 /*
-*   Copyright (C) 2016,2017,2018,2020,2021,2024 by Jonathan Naylor G4KLX
+*   Copyright (C) 2016,2017,2018,2020,2021,2024,2025 by Jonathan Naylor G4KLX
 *
 *   This program is free software; you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -256,19 +256,19 @@ int CFMGateway::run()
 		NETWORK_TYPE type = localNetwork.readType();
 
 		switch (type) {
-		case NT_START: {
+		case NETWORK_TYPE::START: {
 				std::string callsign = localNetwork.readStart();
 				network->writeStart(callsign);
 			}
 			break;
 
-		case NT_DATA: {
+		case NETWORK_TYPE::DATA: {
 				unsigned int n = localNetwork.readData(buffer, BUFFER_LENGTH);
 				network->writeData(buffer, n);
 			}
 			break;
 
-		case NT_END: {
+		case NETWORK_TYPE::END: {
 				localNetwork.readEnd();
 				network->writeEnd();
 			}

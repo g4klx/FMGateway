@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2020,2021,2023,2024 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2020,2021,2023,2024,2025 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,11 +34,11 @@
 #include <md5.h>
 #endif
 
-enum IAX_STATUS {
-	IAXS_DISCONNECTED,
-	IAXS_CONNECTING,
-	IAXS_REGISTERING,
-	IAXS_CONNECTED
+enum class IAX_STATUS {
+	DISCONNECTED,
+	CONNECTING,
+	REGISTERNG,
+	CONNECTED
 };
 
 class CIAXNetwork : public INetwork {

@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2020,2021,2023,2024 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2020,2021,2023,2024,2025 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ void CFMNetwork::clock(unsigned int ms)
 		return;
 
 	// Check if the data is for us
-	if (!CUDPSocket::match(addr, m_addr, IMT_ADDRESS_AND_PORT)) {
+	if (!CUDPSocket::match(addr, m_addr, IPMATCHTYPE::ADDRESS_AND_PORT)) {
 		LogMessage("FM packet received from an invalid source");
 		return;
 	}
@@ -162,7 +162,7 @@ NETWORK_TYPE CFMNetwork::readType() const
 {
 	unsigned int length = m_buffer.dataSize();
 	if (length == 0U)
-		return NT_NONE;
+		return NETWORK_TYPE::NONE;
 
 	uint16_t len = 0U;
 	m_buffer.peek((uint8_t*)&len, sizeof(uint16_t));
@@ -171,13 +171,13 @@ NETWORK_TYPE CFMNetwork::readType() const
 	m_buffer.peek(buffer, 3U);
 
 	if (::memcmp(buffer, "FMD", 3U) == 0)
-		return NT_DATA;
+		return NETWORK_TYPE::DATA;
 	else if (::memcmp(buffer, "FMS", 3U) == 0)
-		return NT_START;
+		return NETWORK_TYPE::START;
 	else if (::memcmp(buffer, "FME", 3U) == 0)
-		return NT_END;
+		return NETWORK_TYPE::END;
 
-	return NT_DATA;		// ???
+	return NETWORK_TYPE::DATA;		// ???
 }
 
 std::string CFMNetwork::readStart()
