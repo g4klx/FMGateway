@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2020,2021,2023,2024 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2020,2021,2023,2024,2025 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ m_addr(),
 m_addrLen(0U),
 m_debug(debug),
 m_buffer(2000U, "FM Network"),
-m_status(IAXS_DISCONNECTED),
+m_status(IAX_STATUS::DISCONNECTED),
 m_retryTimer(1000U, 0U, 500U),
 m_pingTimer(1000U, 20U),
 m_seed(),
@@ -183,7 +183,7 @@ bool CIAXNetwork::open()
 		return false;
 	}
 
-	m_status = IAXS_CONNECTING;
+	m_status = IAX_STATUS::CONNECTING;
 	m_retryTimer.start();
 
 	return true;
@@ -191,7 +191,7 @@ bool CIAXNetwork::open()
 
 bool CIAXNetwork::writeStart(const std::string& callsign)
 {
-	if (m_status != IAXS_CONNECTED)
+	if (m_status != IAX_STATUS::CONNECTED)
 		return false;
 
 	bool ret = writeKey(true);
@@ -208,7 +208,7 @@ bool CIAXNetwork::writeData(const float* data, unsigned int nSamples)
 	assert(data != nullptr);
 	assert(nSamples > 0U);
 
-	if (m_status != IAXS_CONNECTED)
+	if (m_status != IAX_STATUS::CONNECTED)
 		return false;
 
 	int16_t audio[300U];
@@ -238,7 +238,7 @@ bool CIAXNetwork::writeData(const float* data, unsigned int nSamples)
 
 bool CIAXNetwork::writeEnd()
 {
-	if (m_status != IAXS_CONNECTED)
+	if (m_status != IAX_STATUS::CONNECTED)
 		return false;
 
 	return writeKey(false);
@@ -249,10 +249,10 @@ void CIAXNetwork::clock(unsigned int ms)
 	m_retryTimer.clock(ms);
 	if (m_retryTimer.isRunning() && m_retryTimer.hasExpired()) {
 		switch (m_status) {
-			case IAXS_CONNECTING:
+			case IAX_STATUS::CONNECTING:
 				writeNew(true);
 				break;
-			case IAXS_REGISTERING:
+			case IAX_STATUS::REGISTERNG:
 				writeRegReq(true);
 				break;
 			default:
@@ -277,7 +277,7 @@ void CIAXNetwork::clock(unsigned int ms)
 		return;
 
 	// Check if the data is for us
-	if (!CUDPSocket::match(addr, m_addr, IMT_ADDRESS_AND_PORT)) {
+	if (!CUDPSocket::match(addr, m_addr, IPMATCHTYPE::ADDRESS_AND_PORT)) {
 		LogMessage("FM IAX packet received from an invalid source");
 		return;
 	}
@@ -325,7 +325,7 @@ void CIAXNetwork::clock(unsigned int ms)
 
 		writeAck(ts);
 
-		m_status = IAXS_CONNECTED;
+		m_status = IAX_STATUS::CONNECTED;
 		m_retryTimer.stop();
 		m_pingTimer.start();
 	} else if (compareFrame(buffer, AST_FRAME_IAX, IAX_COMMAND_REGREJ)) {
@@ -339,7 +339,7 @@ void CIAXNetwork::clock(unsigned int ms)
 
 		writeAck(ts);
 
-		m_status = IAXS_DISCONNECTED;
+		m_status = IAX_STATUS::DISCONNECTED;
 		m_keyed  = false;
 
 		m_retryTimer.stop();
@@ -355,7 +355,7 @@ void CIAXNetwork::clock(unsigned int ms)
 
 		writeAck(ts);
 
-		m_status = IAXS_DISCONNECTED;
+		m_status = IAX_STATUS::DISCONNECTED;
 		m_keyed  = false;
 
 		m_retryTimer.stop();
@@ -381,7 +381,7 @@ void CIAXNetwork::clock(unsigned int ms)
 		    (buffer[16U] == IAX_IE_CHALLENGE)) {
 			m_seed = std::string((char*)(buffer + 18U), buffer[17U]);
 
-			m_status = IAXS_REGISTERING;
+			m_status = IAX_STATUS::REGISTERNG;
 			m_iSeqNo = iSeqNo + 1U;
 
 			m_retryTimer.start();
@@ -413,7 +413,7 @@ void CIAXNetwork::clock(unsigned int ms)
 
 		writeAck(ts);
 
-		m_status = IAXS_CONNECTED;
+		m_status = IAX_STATUS::CONNECTED;
 		m_retryTimer.stop();
 		m_pingTimer.start();
 	} else if (compareFrame(buffer, AST_FRAME_IAX, IAX_COMMAND_HANGUP)) {
@@ -426,7 +426,7 @@ void CIAXNetwork::clock(unsigned int ms)
 
 		writeAck(ts);
 
-		m_status = IAXS_DISCONNECTED;
+		m_status = IAX_STATUS::DISCONNECTED;
 		m_keyed  = false;
 
 		m_retryTimer.stop();
@@ -586,7 +586,7 @@ void CIAXNetwork::close()
 
 	m_socket.close();
 
-	m_status = IAXS_DISCONNECTED;
+	m_status = IAX_STATUS::DISCONNECTED;
 
 	m_retryTimer.stop();
 	m_pingTimer.stop();

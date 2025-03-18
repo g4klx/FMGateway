@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2015,2016,2017,2018,2020,2021,2024 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2015,2016,2017,2018,2020,2021,2024,2025 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,15 +26,15 @@
 
 const int BUFFER_SIZE = 500;
 
-enum SECTION {
-	SECTION_NONE,
-	SECTION_GENERAL,
-	SECTION_LOG,
-	SECTION_MQTT,
-	SECTION_NETWORK,
-	SECTION_USRP_NETWORK,
-	SECTION_RAW_NETWORK,
-	SECTION_IAX_NETWORK
+enum class SECTION {
+	NONE,
+	GENERAL,
+	LOG,
+	MQTT,
+	NETWORK,
+	USRP_NETWORK,
+	RAW_NETWORK,
+	IAX_NETWORK
 };
 
 CConf::CConf(const std::string& file) :
@@ -84,45 +84,45 @@ CConf::~CConf()
 bool CConf::read()
 {
 	FILE* fp = ::fopen(m_file.c_str(), "rt");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		::fprintf(stderr, "Couldn't open the .ini file - %s\n", m_file.c_str());
 		return false;
 	}
 
-	SECTION section = SECTION_NONE;
+	SECTION section = SECTION::NONE;
 
 	char buffer[BUFFER_SIZE];
-	while (::fgets(buffer, BUFFER_SIZE, fp) != NULL) {
+	while (::fgets(buffer, BUFFER_SIZE, fp) != nullptr) {
 		if (buffer[0U] == '#')
 			continue;
 
 		if (buffer[0U] == '[') {
 			if (::strncmp(buffer, "[General]", 9U) == 0)
-				section = SECTION_GENERAL;
+				section = SECTION::GENERAL;
 			else if (::strncmp(buffer, "[Log]", 5U) == 0)
-				section = SECTION_LOG;
+				section = SECTION::LOG;
 			else if (::strncmp(buffer, "[MQTT]", 6U) == 0)
-				section = SECTION_MQTT;
+				section = SECTION::MQTT;
 			else if (::strncmp(buffer, "[Network]", 9U) == 0)
-				section = SECTION_NETWORK;
+				section = SECTION::NETWORK;
 			else if (::strncmp(buffer, "[USRP Network]", 14U) == 0)
-				section = SECTION_USRP_NETWORK;
+				section = SECTION::USRP_NETWORK;
 			else if (::strncmp(buffer, "[RAW Network]", 13U) == 0)
-				section = SECTION_RAW_NETWORK;
+				section = SECTION::RAW_NETWORK;
 			else if (::strncmp(buffer, "[IAX Network]", 13U) == 0)
-				section = SECTION_IAX_NETWORK;
+				section = SECTION::IAX_NETWORK;
 			else
-				section = SECTION_NONE;
+				section = SECTION::NONE;
 
 			continue;
 		}
 
 		char* key = ::strtok(buffer, " \t=\r\n");
-		if (key == NULL)
+		if (key == nullptr)
 			continue;
 
-		char* value = ::strtok(NULL, "\r\n");
-		if (value == NULL)
+		char* value = ::strtok(nullptr, "\r\n");
+		if (value == nullptr)
 			continue;
 
 		// Remove quotes from the value
@@ -134,7 +134,7 @@ bool CConf::read()
 			char *p;
 
 			// if value is not quoted, remove after # (to make comment)
-			if ((p = strchr(value, '#')) != NULL)
+			if ((p = strchr(value, '#')) != nullptr)
 				*p = '\0';
 
 			// Remove trailing tab/space
@@ -142,7 +142,7 @@ bool CConf::read()
 				*p = '\0';
 		}
 
-		if (section == SECTION_GENERAL) {
+		if (section == SECTION::GENERAL) {
 			if (::strcmp(key, "Callsign") == 0)
 				m_callsign = value;
 			else if (::strcmp(key, "Protocol") == 0)
@@ -151,12 +151,12 @@ bool CConf::read()
 				m_debug = ::atoi(value) == 1;
 			else if (::strcmp(key, "Daemon") == 0)
 				m_daemon = ::atoi(value) == 1;
-		} else if (section == SECTION_LOG) {
+		} else if (section == SECTION::LOG) {
 			if (::strcmp(key, "DisplayLevel") == 0)
 				m_logDisplayLevel = (unsigned int)::atoi(value);
 			else if (::strcmp(key, "MQTTLevel") == 0)
 				m_logMQTTLevel = (unsigned int)::atoi(value);
-		} else if (section == SECTION_MQTT) {
+		} else if (section == SECTION::MQTT) {
 			if (::strcmp(key, "Address") == 0)
 				m_mqttAddress = value;
 			else if (::strcmp(key, "Port") == 0)
@@ -165,7 +165,7 @@ bool CConf::read()
 				m_mqttKeepalive = (unsigned int)::atoi(value);
 			else if (::strcmp(key, "Name") == 0)
 				m_mqttName = value;
-		} else if (section == SECTION_NETWORK) {
+		} else if (section == SECTION::NETWORK) {
 			if (::strcmp(key, "LocalAddress") == 0)
 				m_networkLocalAddress = value;
 			else if (::strcmp(key, "LocalPort") == 0)
@@ -176,7 +176,7 @@ bool CConf::read()
 				m_networkRptPort = uint16_t(::atoi(value));
 			else if (::strcmp(key, "Debug") == 0)
 				m_networkDebug = ::atoi(value) == 1;
-		} else if (section == SECTION_USRP_NETWORK) {
+		} else if (section == SECTION::USRP_NETWORK) {
 			if (::strcmp(key, "LocalAddress") == 0)
 				m_usrpLocalAddress = value;
 			else if (::strcmp(key, "LocalPort") == 0)
@@ -187,7 +187,7 @@ bool CConf::read()
 				m_usrpRemotePort = uint16_t(::atoi(value));
 			else if (::strcmp(key, "Debug") == 0)
 				m_usrpDebug = ::atoi(value) == 1;
-		} else if (section == SECTION_RAW_NETWORK) {
+		} else if (section == SECTION::RAW_NETWORK) {
 			if (::strcmp(key, "LocalAddress") == 0)
 				m_rawLocalAddress = value;
 			else if (::strcmp(key, "LocalPort") == 0)
@@ -202,7 +202,7 @@ bool CConf::read()
 				m_rawSquelchFile = value;
 			else if (::strcmp(key, "Debug") == 0)
 				m_rawDebug = ::atoi(value) == 1;
-		} else if (section == SECTION_IAX_NETWORK) {
+		} else if (section == SECTION::IAX_NETWORK) {
 			if (::strcmp(key, "LocalAddress") == 0)
 				m_iaxLocalAddress = value;
 			else if (::strcmp(key, "LocalPort") == 0)
