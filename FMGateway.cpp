@@ -213,7 +213,7 @@ int CFMGateway::run()
 
 	std::vector<std::pair<std::string, void (*)(const unsigned char*, unsigned int)>> subscriptions;
 
-	m_mqtt = new CMQTTConnection(conf.getMQTTAddress(), conf.getMQTTPort(), conf.getMQTTName(), subscriptions, conf.getMQTTKeepalive());
+	m_mqtt = new CMQTTConnection(conf.getMQTTAddress(), conf.getMQTTPort(), conf.getMQTTName(), conf.getMQTTAuthEnabled(), conf.getMQTTUsername(), conf.getMQTTPassword(), subscriptions, conf.getMQTTKeepalive());
 	ret = m_mqtt->open();
 	if (!ret)
 		return 1; 

@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2015,2016,2017,2018,2020,2021,2024 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2015,2016,2017,2018,2020,2021,2024,2025 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -46,6 +46,9 @@ public:
 	uint16_t     getMQTTPort() const;
 	unsigned int getMQTTKeepalive() const;
 	std::string  getMQTTName() const;
+	bool         getMQTTAuthEnabled() const;
+	std::string  getMQTTUsername() const;
+	std::string  getMQTTPassword() const;
 
 	// The Network section
 	std::string  getNetworkLocalAddress() const;
@@ -94,6 +97,9 @@ private:
 	uint16_t     m_mqttPort;
 	unsigned int m_mqttKeepalive;
 	std::string  m_mqttName;
+	bool         m_mqttAuthEnabled;
+	std::string  m_mqttUsername;
+	std::string  m_mqttPassword;
 
 	std::string  m_networkLocalAddress;
 	uint16_t     m_networkLocalPort;
