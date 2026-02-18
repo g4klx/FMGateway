@@ -4,6 +4,6 @@ The Gateway has an ini file that contain the parameters for running the software
 
 The MMDVM.ini file should have the IP address and port number of the gateway in the [FM Network] settings.
 
-These programs build on 32-bit and 64-bit Linux as well as on Windows using Visual Studio 2019 on x86 and x64.
+These programs build on 32-bit and 64-bit Linux as well as on Windows using Visual Studio 2022 on x86 and x64.
 
 This software is licenced under the GPL v2 and is primarily intended for amateur and educational use.
