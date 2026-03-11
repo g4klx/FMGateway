@@ -4,19 +4,21 @@ LDFLAGS = -g
 
 # If you have the resampler library installed, add -DHAS_SRC to the CFLAGS line, and -lsamplerate to the LIBS line
 
-CFLAGS  = -g -O3 -Wall -pthread
+CFLAGS  = -g -O3 -Wall -MMD -MD -pthread
 LIBS    = -lpthread -lmd -lmosquitto
 
-OBJECTS = Conf.o FMGateway.o FMNetwork.o IAXNetwork.o Log.o MQTTConnection.o Network.o RAWNetwork.o StopWatch.o Thread.o Timer.o UDPSocket.o \
-		  USRPNetwork.o Utils.o
+SRCS = $(wildcard *.cpp)
+OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
 
 all:		FMGateway
 
-FMGateway:	$(OBJECTS)
-		$(CXX) $(OBJECTS) $(CFLAGS) $(LIBS) -o FMGateway
+FMGateway:	$(OBJS)
+		$(CXX) $(OBJS) $(CFLAGS) $(LIBS) -o FMGateway
 
 %.o: %.cpp
 		$(CXX) $(CFLAGS) -c -o $@ $<
+-include $(DEPS)
 
 FMGateway.o: GitVersion.h FORCE
 
