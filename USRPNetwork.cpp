@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2020,2021,2023,2024,2025 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2020,2021,2023,2024,2025,2026 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -143,8 +143,8 @@ bool CUSRPNetwork::writeStart(const std::string& callsign)
 	buffer[length++] = 0x00U;
 
 	// Callsign
-	for (std::string::const_iterator it = callsign.cbegin(); it != callsign.cend(); ++it)
-		buffer[length++] = *it;
+	for (const auto& it : callsign)
+		buffer[length++] = it;
 
 	// End of Metadata
 	buffer[length++] = 0x00U;
@@ -321,9 +321,9 @@ void CUSRPNetwork::clock(unsigned int ms)
 
 	// The type is a big-endian 4-byte integer
 	unsigned int type = (buffer[20U] << 24) +
-			    (buffer[21U] << 16) +
-			    (buffer[22U] << 8)  +
-			    (buffer[23U] << 0);
+						(buffer[21U] << 16) +
+						(buffer[22U] << 8)  +
+					    (buffer[23U] << 0);
 
 	if (type == 0U)
 		m_buffer.addData(buffer + 32U, length - 32U);

@@ -50,7 +50,6 @@ public:
 	bool addData(const T* buffer, unsigned int nSamples)
 	{
 		assert(buffer != nullptr);
-		assert(nSamples > 0U);
 
 		if (nSamples >= freeSpace()) {
 			LogError("%s buffer overflow, clearing the buffer. (%u >= %u)", m_name, nSamples, freeSpace());
@@ -71,7 +70,6 @@ public:
 	bool getData(T* buffer, unsigned int nSamples)
 	{
 		assert(buffer != nullptr);
-		assert(nSamples > 0U);
 
 		if (dataSize() < nSamples) {
 			LogError("**** Underflow in %s ring buffer, %u < %u", m_name, dataSize(), nSamples);
@@ -91,7 +89,6 @@ public:
 	bool peek(T* buffer, unsigned int nSamples) const
 	{
 		assert(buffer != nullptr);
-		assert(nSamples > 0U);
 
 		if (dataSize() < nSamples) {
 			LogError("**** Underflow peek in %s ring buffer, %u < %u", m_name, dataSize(), nSamples);
