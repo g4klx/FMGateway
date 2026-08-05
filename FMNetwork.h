@@ -42,7 +42,7 @@ public:
 
 	bool writeData(const float* data, unsigned int nSamples);
 
-	NETWORK_TYPE readType() const;
+	NETWORK_TYPE readType();
 
 	std::string readStart();
 

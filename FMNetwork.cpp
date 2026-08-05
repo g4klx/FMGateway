@@ -155,29 +155,38 @@ void CFMNetwork::clock(unsigned int ms)
 		uint16_t len = 3U;
 		m_buffer.addData((uint8_t*)&len, sizeof(uint16_t));
 		m_buffer.addData(buffer, 3U);
+	} else {
+		CUtils::dump(4U, "Unknown FM network packet received", buffer, length);
 	}
 }
 
-NETWORK_TYPE CFMNetwork::readType() const
+NETWORK_TYPE CFMNetwork::readType()
 {
 	unsigned int length = m_buffer.dataSize();
 	if (length == 0U)
 		return NETWORK_TYPE::NONE;
 
-	uint16_t len = 0U;
-	m_buffer.peek((uint8_t*)&len, sizeof(uint16_t));
+	uint8_t buffer[BUFFER_LENGTH];
+	m_buffer.peek(buffer, 3U + sizeof(uint16_t));
 
-	uint8_t buffer[5U];
-	m_buffer.peek(buffer, 3U);
+	uint8_t* p = buffer + sizeof(uint16_t);
 
-	if (::memcmp(buffer, "FMD", 3U) == 0)
+	if (::memcmp(p, "FMD", 3U) == 0)
 		return NETWORK_TYPE::DATA;
-	else if (::memcmp(buffer, "FMS", 3U) == 0)
+	else if (::memcmp(p, "FMS", 3U) == 0)
 		return NETWORK_TYPE::START;
-	else if (::memcmp(buffer, "FME", 3U) == 0)
+	else if (::memcmp(p, "FME", 3U) == 0)
 		return NETWORK_TYPE::END;
 
-	return NETWORK_TYPE::DATA;		// ???
+	// Purge the ring buffer of the packet
+	uint16_t len = 0U;
+	m_buffer.getData((uint8_t*)&len, sizeof(uint16_t));
+
+	m_buffer.getData(buffer, len);
+
+	CUtils::dump(4U, "Unknown FM packet in the ring buffer", buffer, len);
+
+	return NETWORK_TYPE::NONE;
 }
 
 std::string CFMNetwork::readStart()
