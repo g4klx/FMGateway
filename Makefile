@@ -2,12 +2,22 @@ CC      = cc
 CXX     = c++
 LDFLAGS = -g
 
-# If you have the resampler library installed, add -DHAS_SRC to the CFLAGS line, and -lsamplerate to the LIBS line
+# If you have the resampler library installed for RAW, add -DHAS_SRC to the
+# CFLAGS line, and -lsamplerate to the LIBS line
+# Build VAFM support with: make VAFM=1
 
 CFLAGS  = -g -O3 -Wall -MMD -MD -pthread
 LIBS    = -lpthread -lmd -lmosquitto
 
 SRCS = $(wildcard *.cpp)
+
+ifeq ($(VAFM),1)
+CFLAGS += -DHAS_VAFM
+LIBS   += -lopus -lsamplerate
+else
+SRCS := $(filter-out VAFMNetwork.cpp,$(SRCS))
+endif
+
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
