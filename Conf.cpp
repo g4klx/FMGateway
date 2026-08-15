@@ -34,7 +34,8 @@ enum class SECTION {
 	NETWORK,
 	USRP_NETWORK,
 	RAW_NETWORK,
-	IAX_NETWORK
+	IAX_NETWORK,
+	VAFM_NETWORK
 };
 
 CConf::CConf(const std::string& file) :
@@ -76,7 +77,15 @@ m_iaxRemotePort(0U),
 m_iaxUsername(),
 m_iaxPassword(),
 m_iaxNode(),
-m_iaxDebug(false)
+m_iaxDebug(false),
+m_vafmLocalAddress("0.0.0.0"),
+m_vafmLocalPort(0U),
+m_vafmRemoteAddress("127.0.0.1"),
+m_vafmRemotePort(43000U),
+m_vafmPassphrase(),
+m_vafmKeepalive(25U),
+m_vafmOpusBitrate(24000),
+m_vafmDebug(false)
 {
 }
 
@@ -114,6 +123,8 @@ bool CConf::read()
 				section = SECTION::RAW_NETWORK;
 			else if (::strncmp(buffer, "[IAX Network]", 13U) == 0)
 				section = SECTION::IAX_NETWORK;
+			else if (::strncmp(buffer, "[VAFM Network]", 14U) == 0)
+				section = SECTION::VAFM_NETWORK;
 			else
 				section = SECTION::NONE;
 
@@ -228,6 +239,23 @@ bool CConf::read()
 				m_iaxNode = value;
 			else if (::strcmp(key, "Debug") == 0)
 				m_iaxDebug = ::atoi(value) == 1;
+		} else if (section == SECTION::VAFM_NETWORK) {
+			if (::strcmp(key, "LocalAddress") == 0)
+				m_vafmLocalAddress = value;
+			else if (::strcmp(key, "LocalPort") == 0)
+				m_vafmLocalPort = uint16_t(::atoi(value));
+			else if (::strcmp(key, "RemoteAddress") == 0)
+				m_vafmRemoteAddress = value;
+			else if (::strcmp(key, "RemotePort") == 0)
+				m_vafmRemotePort = uint16_t(::atoi(value));
+			else if (::strcmp(key, "Passphrase") == 0)
+				m_vafmPassphrase = value;
+			else if (::strcmp(key, "Keepalive") == 0)
+				m_vafmKeepalive = (unsigned int)::atoi(value);
+			else if (::strcmp(key, "OpusBitrate") == 0)
+				m_vafmOpusBitrate = ::atoi(value);
+			else if (::strcmp(key, "Debug") == 0)
+				m_vafmDebug = ::atoi(value) == 1;
 		}
 	}
 
@@ -424,4 +452,44 @@ std::string CConf::getIAXNode() const
 bool CConf::getIAXDebug() const
 {
 	return m_iaxDebug;
+}
+
+std::string CConf::getVAFMLocalAddress() const
+{
+	return m_vafmLocalAddress;
+}
+
+uint16_t CConf::getVAFMLocalPort() const
+{
+	return m_vafmLocalPort;
+}
+
+std::string CConf::getVAFMRemoteAddress() const
+{
+	return m_vafmRemoteAddress;
+}
+
+uint16_t CConf::getVAFMRemotePort() const
+{
+	return m_vafmRemotePort;
+}
+
+std::string CConf::getVAFMPassphrase() const
+{
+	return m_vafmPassphrase;
+}
+
+unsigned int CConf::getVAFMKeepalive() const
+{
+	return m_vafmKeepalive;
+}
+
+int CConf::getVAFMOpusBitrate() const
+{
+	return m_vafmOpusBitrate;
+}
+
+bool CConf::getVAFMDebug() const
+{
+	return m_vafmDebug;
 }

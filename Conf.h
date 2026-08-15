@@ -83,6 +83,16 @@ public:
 	std::string  getIAXNode() const;
 	bool         getIAXDebug() const;
 
+	// The VAFM Network section
+	std::string  getVAFMLocalAddress() const;
+	uint16_t     getVAFMLocalPort() const;
+	std::string  getVAFMRemoteAddress() const;
+	uint16_t     getVAFMRemotePort() const;
+	std::string  getVAFMPassphrase() const;
+	unsigned int getVAFMKeepalive() const;
+	int          getVAFMOpusBitrate() const;
+	bool         getVAFMDebug() const;
+
 private:
 	std::string  m_file;
 	std::string  m_callsign;
@@ -129,6 +139,15 @@ private:
 	std::string  m_iaxPassword;
 	std::string  m_iaxNode;
 	bool         m_iaxDebug;
+
+	std::string  m_vafmLocalAddress;
+	uint16_t     m_vafmLocalPort;
+	std::string  m_vafmRemoteAddress;
+	uint16_t     m_vafmRemotePort;
+	std::string  m_vafmPassphrase;
+	unsigned int m_vafmKeepalive;
+	int          m_vafmOpusBitrate;
+	bool         m_vafmDebug;
 };
 
 #endif

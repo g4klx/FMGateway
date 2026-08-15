@@ -20,6 +20,9 @@
 #include "USRPNetwork.h"
 #include "RAWNetwork.h"
 #include "IAXNetwork.h"
+#if defined(HAS_VAFM)
+#include "VAFMNetwork.h"
+#endif
 #include "FMNetwork.h"
 #include "UDPSocket.h"
 #include "FMGateway.h"
@@ -238,7 +241,13 @@ int CFMGateway::run()
 		network = new CRAWNetwork(conf.getRAWLocalAddress(), conf.getRAWLocalPort(), conf.getRAWRemoteAddress(), conf.getRAWRemotePort(), conf.getRAWSampleRate(), conf.getRAWSquelchFile(), conf.getRAWDebug());
 	} else if (conf.getProtocol() == "IAX") {
 		network = new CIAXNetwork(conf.getCallsign(), conf.getIAXUsername(), conf.getIAXPassword(), conf.getIAXNode(), conf.getIAXLocalAddress(), conf.getIAXLocalPort(), conf.getIAXRemoteAddress(), conf.getIAXRemotePort(), conf.getIAXDebug());
-	} else {
+	}
+#if defined(HAS_VAFM)
+	else if (conf.getProtocol() == "VAFM") {
+		network = new CVAFMNetwork(conf.getCallsign(), conf.getVAFMPassphrase(), conf.getVAFMLocalAddress(), conf.getVAFMLocalPort(), conf.getVAFMRemoteAddress(), conf.getVAFMRemotePort(), conf.getVAFMKeepalive(), conf.getVAFMOpusBitrate(), conf.getVAFMDebug());
+	}
+#endif
+	else {
 		LogError("Invalid FM network protocol specified - %s", conf.getProtocol().c_str());
 		return 1;
 	}
